@@ -24,10 +24,8 @@
 # 2 = Failed to stay up, kill him
 # 3 = Died, remove from 'ingame'
 
-# Damage handling
-/scoreboard players add @a[score_damage_min=1] reduceDamage 1
-	/scoreboard players remove @a[score_damage_min=1] damage 2
-	
+# Damage reducing
+/scoreboard players remove @a[score_damage_min=1] damage 2
 	
 # Death handling
 /scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
