@@ -2,7 +2,7 @@
 # Restart Map
 # Repeating conditional chain:
 scoreboard players test MapState vars 0 0 # <-- Repeat cmd block
-	gamerule commandBlockOutput false # <-- CONDITIONAL repeat cmd block
+	scoreboard players set MapState vars 1 # <-- CONDITIONAL repeat cmd block
 	gamerule doDaylightCycle false
 	gamerule logAdminCommands false
 	gamerule doMobSpawning false
@@ -10,7 +10,16 @@ scoreboard players test MapState vars 0 0 # <-- Repeat cmd block
 	scoreboard objectives remove lobbyStatus
 	scoreboard objectives add lobbyStatus dummy Lobby Status
 	gamerule showDeathMessages false
-	scoreboard players set MapState vars 1
+	gamerule commandBlockOutput false
+	scoreboard objectives remove effects
+	scoreboard objectives add effects dummy Effects
+	scoreboard objectives remove ingame
+	scoreboard objectives add ingame dummy In Game
+	scoreboard objectives remove damage
+	scoreboard objectives add damage stat.damageTaken Damage
+	scoreboard objectives remove killed
+	scoreboard objectives add killed stat.deaths Killed
+	
 	
 # Trigger reset
 # Impulse chain:
