@@ -1,0 +1,30 @@
+
+# Restart Map
+# Repeating conditional chain:
+scoreboard players test MapState vars 0 0 # <-- Repeat cmd block
+	gamerule commandBlockOutput false # <-- CONDITIONAL repeat cmd block
+	gamerule doDaylightCycle false
+	gamerule logAdminCommands false
+	gamerule doMobSpawning false
+	gamerule mobGriefing false
+	scoreboard objectives remove lobbyStatus
+	scoreboard objectives add lobbyStatus dummy Lobby Status
+	gamerule showDeathMessages false
+	scoreboard players set MapState vars 1
+	
+# Trigger reset
+# Impulse chain:
+scoreboard objectives remove vars
+	scoreboard objectives add vars dummy Variables
+	scoreboard players set MapState vars 0
+	
+# Catch new players
+# Repeat cmd block
+scoreboard players add @a lobbyStatus 0
+# Repeating conditional chain
+testfor @a[score_lobbyStatus_min=0,score_lobbyStatus=0]
+	tp @a[score_lobbyStatus_min=0,score_lobbyStatus=0] -24 6 -56 0 0
+	gamemode adventure @a[score_lobbyStatus_min=0,score_lobbyStatus=0]
+	spawnpoint @a[score_lobbyStatus_min=0,score_lobbyStatus=0] -24 6 -56
+	scoreboard players set @a[score_lobbyStatus_min=0,score_lobbyStatus=0] lobbyStatus 1
+	
