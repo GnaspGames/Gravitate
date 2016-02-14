@@ -28,12 +28,14 @@
 /scoreboard players remove @a[score_damage_min=1] damage 1
 	
 # Death handling
-/scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
-	/kill @a[m=2,score_ingame_min=2,score_ingame=2]
-	/scoreboard players set @a[score_killed_min=1] damage 0
-	/scoreboard players set @a[score_killed_min=1] ingame 3
-	/scoreboard players set @a[score_killed_min=1] killed 0
-	/scoreboard players reset @a[m=2,score_ingame_min=3,score_ingame=3] ingame
+scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
+	execute @a[m=2,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
+	execute @a[m=2,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
+	kill @a[m=2,score_ingame_min=2,score_ingame=2]
+	scoreboard players set @a[score_killed_min=1] damage 0
+	scoreboard players set @a[score_killed_min=1] ingame 3
+	scoreboard players set @a[score_killed_min=1] killed 0
+	scoreboard players reset @a[m=2,score_ingame_min=3,score_ingame=3] ingame
 	
 
 # TEMP: Send nearest to game
