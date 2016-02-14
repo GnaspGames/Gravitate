@@ -25,7 +25,7 @@
 # 3 = Died, remove from 'ingame'
 
 # Damage reducing
-/scoreboard players remove @a[score_damage_min=1] damage 2
+/scoreboard players remove @a[score_damage_min=1] damage 1
 	
 # Death handling
 /scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
