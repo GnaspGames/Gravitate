@@ -1,14 +1,12 @@
 
-# SETUP:
-/scoreboard objectives add effects dummy Effects
-/scoreboard objectives add ingame dummy In Game
-/scoreboard objectives add damage stat.damageTaken Damage
-/scoreboard objectives add killed stat.deaths Killed
+
 
 # Repeat Chain
+{"type":"repeating", "auto":true}
 /execute @e[name=airvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200 force
-	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200 force
-	
+	{"type":"chain"}
+	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200 force	
+
 	/scoreboard players set @a effects 1
 	/execute @e[name=airvent] ~ ~ ~ execute @a[dx=3,dy=53,dz=3] ~ ~ ~ scoreboard players set @p effects 2
 	/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
@@ -19,37 +17,45 @@
 	/effect @a[m=2,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
 	/effect @a[m=2,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
 	
-# In Game:
-# 1 = Yes playing
-# 2 = Failed to stay up, kill him
-# 3 = Died, remove from 'ingame'
+! In Game:
+! 1 = Yes playing
+! 2 = Failed to stay up, kill him
+! 3 = Died, remove from 'ingame'
 
 # Damage reducing
+{"type":"repeating", "auto":true}
 /scoreboard players remove @a[score_damage_min=1] damage 1
 	
 # Death handling
-scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
-	execute @a[m=2,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
-	execute @a[m=2,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
-	kill @a[m=2,score_ingame_min=2,score_ingame=2]
-	scoreboard players set @a[score_killed_min=1] damage 0
-	scoreboard players set @a[score_killed_min=1] ingame 3
-	scoreboard players set @a[score_killed_min=1] killed 0
-	scoreboard players reset @a[m=2,score_ingame_min=3,score_ingame=3] ingame
+{"type":"repeating", "auto":true}
+/scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
+	{"type":"chain"}
+	/execute @a[m=2,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
+	/execute @a[m=2,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
+	/kill @a[m=2,score_ingame_min=2,score_ingame=2]
+	/scoreboard players set @a[score_killed_min=1] damage 0
+	/scoreboard players set @a[score_killed_min=1] ingame 3
+	/scoreboard players set @a[score_killed_min=1] killed 0
+	/scoreboard players reset @a[m=2,score_ingame_min=3,score_ingame=3] ingame
 	
-
-# TEMP: Send nearest to game
-# Impule chain
-/give @p minecraft:bow
-	/give @p minecraft:arrow 64
-	/gamemode adventure @p
-	/scoreboard players set @p ingame 1
-	/tp @p 56 10 -56 0 -35
-	
-# Start a new game:
-# Impulse chain
-/tp @a[m=2] ?? ?? ?? #MAKE SURE IT'S NOT ON THE GROUND
+# START NEW GAME FUNCTION
+{"type":"repeating", "auto":true, "conditional": false}
+/kill @e[type=ArmorStand,name=StartNewGame]
+	{"conditional":true}
+	/clear @a[m=2]
+	{"type":"chain", "conditional":false}
+	/give @a[m=2] minecraft:bow
+	/give @a[m=2] minecraft:arrow 64
 	/scoreboard players set @a[m=2] ingame 1
+	/tp @a[m=2] 56 10 -56 0 -35
+	
+# --
+# SUMMON NEW GAME
+{"type":"impulse", "auto":false, "conditional": false}
+/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame}
+	
+	
+	
 	
 	
 
