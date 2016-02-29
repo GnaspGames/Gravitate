@@ -17,10 +17,10 @@
 	/effect @a[m=2,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
 	/effect @a[m=2,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
 	
-! In Game:
-! 1 = Yes playing
-! 2 = Failed to stay up, kill him
-! 3 = Died, remove from 'ingame'
+ --- In Game ---
+ 1 = Yes playing
+ 2 = Failed to stay up, kill him
+ 3 = Died, remove from 'ingame'
 
 # Damage reducing
 {"type":"repeating", "auto":true}
@@ -53,6 +53,8 @@
 # SUMMON NEW GAME
 {"type":"impulse", "auto":false, "conditional": false}
 /summon ArmorStand ~ ~ ~ {CustomName:StartNewGame}
+
+
 	
 	
 	
