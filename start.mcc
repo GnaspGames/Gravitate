@@ -20,7 +20,11 @@
 		/scoreboard objectives add damage stat.damageTaken Damage
 		/scoreboard objectives remove killed
 		/scoreboard objectives add killed stat.deaths Killed
-		/say MAP RESET
+		/scoreboard objectives remove testforOutput
+		/scoreboard objectives add testforOutput dummy TESTFOR OUTPUT
+		/kill @e[type=ArmorStand,name=SYSTEM]
+		/summon ArmorStand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
+		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 	
 # Catch new players
 {"type":"repeating", "auto": true}
