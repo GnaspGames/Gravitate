@@ -9,10 +9,10 @@
 	/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
 	/scoreboard players set @a[score_damage_min=1] effects 0
 	
-	/effect @a[m=2] clear
-	/effect @a[m=2,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
-	/effect @a[m=2,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
-	/effect @a[m=2,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
+	/effect @a[m=adventure] clear
+	/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
+	/effect @a[m=adventure,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
+	/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
 	
  --- In Game ---
  1 = Yes playing
@@ -25,31 +25,34 @@
 	
 # Death handling
 {"type":"repeating", "auto":true}
-/scoreboard players set @a[m=2,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
+/scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
 	{"type":"chain"}
-	/execute @a[m=2,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
-	/execute @a[m=2,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
-	/kill @a[m=2,score_ingame_min=2,score_ingame=2]
+	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
+	/execute @a[m=adventure,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
+	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2]
 	/scoreboard players set @a[score_killed_min=1] damage 0
 	/scoreboard players set @a[score_killed_min=1] ingame 3
 	/scoreboard players set @a[score_killed_min=1] killed 0
-	/scoreboard players reset @a[m=2,score_ingame_min=3,score_ingame=3] ingame
+	/scoreboard players reset @a[m=adventure,score_ingame_min=3,score_ingame=3] ingame
 	
 # START NEW GAME FUNCTION
 {"type":"repeating", "auto":true, "conditional": false}
 /kill @e[type=ArmorStand,name=StartNewGame]
 	{"conditional":true}
-	/clear @a[m=2]
+	/gamemode adventure @a[m=!creative]
 	{"type":"chain", "conditional":false}
-	/give @a[m=2] minecraft:bow
-	/give @a[m=2] minecraft:arrow 64
-	/scoreboard players set @a[m=2] ingame 1
-	/tp @a[m=2] 56 10 -56 0 -35
-	
+	/clear @a[m=adventure]
+	/give @a[m=adventure] minecraft:bow
+	/give @a[m=adventure] minecraft:arrow 64
+	/scoreboard players set @a[m=adventure] ingame 1
+	/tp @a[m=adventure] 56 10 -56 0 -35
+
 # --
 # SUMMON NEW GAME
 {"type":"impulse", "auto":false, "conditional": false}
 /summon ArmorStand ~ ~ ~ {CustomName:StartNewGame}
+
+
 
 
 	
