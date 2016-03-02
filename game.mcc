@@ -90,6 +90,9 @@
 	{"type":"chain", "conditional":false}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
+	/clear @a[m=adventure]
+	/effect @a[m=adventure] minecraft:saturation 1 100 true
+	/effect @a[m=adventure] minecraft:instant_health 1 100 true
 	/tp @a[m=!creative] -24 6 -56 0 0
 	/scoreboard players reset @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame
 	-- Clone "START GAME" wall
