@@ -19,11 +19,11 @@
  2 = Failed to stay up, kill him
  3 = Died, remove from 'ingame'
 
-# Damage reducing
+# DAMAGE REDUCEING
 {"type":"repeating", "auto":true}
 /scoreboard players remove @a[score_damage_min=1] damage 1
 	
-# Death handling
+# DEATH HANDLING
 {"type":"repeating", "auto":true}
 /scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
 	{"type":"chain"}
@@ -34,6 +34,17 @@
 	/scoreboard players set @a[score_killed_min=1] ingame 3
 	/scoreboard players set @a[score_killed_min=1] killed 0
 	/scoreboard players reset @a[m=adventure,score_ingame_min=3,score_ingame=3] ingame
+	
+# TRIGGER: START NEW GAME
+{"type":"repeating", "auto":true, "conditional": false}
+	{"executeAs" : "@a[score_trigger_start_min=1]"}
+		-- Create the StartNewGame function caller, and set trigger_start to 0
+		/say I started a new game
+		{"type":"chain"}
+		/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
+		/scoreboard players set @p trigger_start 0
+	{"executeAs" : ""}
+	/scoreboard players enable @a trigger_start
 	
 # FUNCTION: START NEW GAME
 {"type":"repeating", "auto":true, "conditional": false}
@@ -48,6 +59,17 @@
 	/scoreboard players set @a[m=adventure] ingame 1
 	-- Clone "SPECTATE WALL" wall
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
+	
+# TRIGGER: SPECTATE
+{"type":"repeating", "auto":true, "conditional": false}
+	{"executeAs" : "@a[score_trigger_spectate_min=1]"}
+		-- Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
+		/gamemode spectator @p
+		{"type":"chain"}
+		/tp @p @r[type=ArmorStand,name=startingPoint]
+		/scoreboard players set @p trigger_spectate 0
+	{"executeAs" : ""}
+	/scoreboard players enable @a trigger_spectate
 
 # GAME END DETECT
 {"type":"repeating", "auto":true, "conditional": false}
@@ -66,8 +88,9 @@
 	-- Announce winner
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"type":"chain", "conditional":false}
-	-- Move the winner back to the lobby
-	/tp @a[m=adventure,score_ingame_min=1,score_ingame=1] -24 6 -56 0 0
+	-- Move everyone back to the lobby
+	/gamemode adventure @a[m=spectator]
+	/tp @a[m=!creative] -24 6 -56 0 0
 	/scoreboard players reset @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame
 	-- Clone "START GAME" wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
