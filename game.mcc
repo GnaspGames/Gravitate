@@ -35,7 +35,7 @@
 	/scoreboard players set @a[score_killed_min=1] killed 0
 	/scoreboard players reset @a[m=adventure,score_ingame_min=3,score_ingame=3] ingame
 	
-# START NEW GAME FUNCTION
+# FUNCTION: START NEW GAME
 {"type":"repeating", "auto":true, "conditional": false}
 /kill @e[type=ArmorStand,name=StartNewGame]
 	{"conditional":true}
@@ -44,9 +44,35 @@
 	/clear @a[m=adventure]
 	/give @a[m=adventure] minecraft:bow
 	/give @a[m=adventure] minecraft:arrow 64
+	/execute @a[m=adventure] ~ ~ ~ tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @a[m=adventure] ingame 1
-	/tp @a[m=adventure] 56 10 -56 0 -35
+	-- Clone "SPECTATE WALL" wall
+	/clone -26 2 -40 -23 3 -39 -26 5 -50
 
+# GAME END DETECT
+{"type":"repeating", "auto":true, "conditional": false}
+/scoreboard players set @e[name=SYSTEM] testforOutput -1
+	{"type":"chain"}
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	/testfor @a[m=adventure,score_ingame_min=1,score_ingame=1]
+	-- Above works assuming testfor block will be 1 in x direction of stats block.
+	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"func_EndGame"}
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+	
+# FUNCTION: END GAME
+{"type":"repeating", "auto":true, "conditional": false}
+/kill @e[type=ArmorStand,name=func_EndGame]
+	{"conditional":true}
+	-- Announce winner
+	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+	{"type":"chain", "conditional":false}
+	-- Move the winner back to the lobby
+	/tp @a[m=adventure,score_ingame_min=1,score_ingame=1] -24 6 -56 0 0
+	/scoreboard players reset @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame
+	-- Clone "START GAME" wall
+	/clone -26 2 -45 -23 3 -44 -26 5 -50
+	
+	
 # --
 # SUMMON NEW GAME
 {"type":"impulse", "auto":false, "conditional": false}
