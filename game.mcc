@@ -1,8 +1,8 @@
 # Repeat Chain
 {"type":"repeating", "auto":true}
-/execute @e[name=airvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200 force
+/execute @e[name=airvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200
 	{"type":"chain"}
-	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200 force	
+	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200	
 
 	/scoreboard players set @a effects 1
 	/execute @e[name=airvent] ~ ~ ~ execute @a[dx=3,dy=53,dz=3] ~ ~ ~ scoreboard players set @p effects 2
