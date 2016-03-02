@@ -21,7 +21,7 @@
 
 # DAMAGE REDUCEING
 {"type":"repeating", "auto":true}
-/scoreboard players remove @a[score_damage_min=1] damage 1
+/scoreboard players remove @a[score_damage_min=1] damage 2
 	
 # DEATH HANDLING
 {"type":"repeating", "auto":true}
