@@ -21,6 +21,8 @@
 		/scoreboard objectives add damage stat.damageTaken Damage
 		/scoreboard objectives remove killed
 		/scoreboard objectives add killed stat.deaths Killed
+		/scoreboard objectives remove timeSinceDeath
+		/scoreboard objectives add timeSinceDeath stat.timeSinceDeath  Time Since Death
 		/scoreboard objectives remove lives
 		/scoreboard objectives add lives dummy Lives
 		/scoreboard objectives remove testforOutput
