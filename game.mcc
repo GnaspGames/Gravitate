@@ -1,47 +1,44 @@
-# Repeat Chain
+# PARTICLES
 {"type":"repeating", "auto":true}
 /execute @e[name=airvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200
 	{"type":"chain"}
 	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200	
 
-	/scoreboard players set @a effects 1
-	/execute @e[name=airvent] ~ ~ ~ execute @a[dx=3,dy=53,dz=3] ~ ~ ~ scoreboard players set @p effects 2
-	/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
-	/scoreboard players set @a[score_damage_min=1] effects 0
+--- Effects Score ---
+0 = No Effects (from taking damage)
+1 = Slow Falling
+2 = Rising (from airvent)
 	
+# PLAYER EFFECTS
+{"type":"repeating", "auto":true}
 	/effect @a[m=adventure] clear
-	/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
-	/effect @a[m=adventure,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
-	/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
+	{"type":"chain"}
+		-- Default score of 1
+		/scoreboard players set @a effects 1
+		-- Apply 2 if above a vent
+		/execute @e[name=airvent] ~ ~ ~ execute @a[dx=3,dy=53,dz=3] ~ ~ ~ scoreboard players set @p effects 2
+		/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
+		-- Set to 0 if player has taken damage (and reduce damage score)
+		/scoreboard players set @a[score_damage_min=1] effects 0
+		/scoreboard players remove @a[score_damage_min=1] damage 2
+		-- Apply effects based on score
+		/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
+		/effect @a[m=adventure,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
+		/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
 	
  --- In Game ---
+ 0 = Spawn into the game
  1 = Yes playing
  2 = Failed to stay up, kill him
- 3 = Died, remove from 'ingame'
-
-# DAMAGE REDUCEING
-{"type":"repeating", "auto":true}
-/scoreboard players remove @a[score_damage_min=1] damage 2
-	
-# DEATH HANDLING
-{"type":"repeating", "auto":true}
-/scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
-	{"type":"chain"}
-	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
-	/execute @a[m=adventure,score_ingame_min=2,score_ingame=2] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" could't stay up and is out!"}]
-	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2]
-	/scoreboard players set @a[score_killed_min=1] damage 0
-	/scoreboard players set @a[score_killed_min=1] ingame 3
-	/scoreboard players set @a[score_killed_min=1] killed 0
-	/scoreboard players reset @a[m=adventure,score_ingame_min=3,score_ingame=3] ingame
-	
+ 3 = Died, loose a life, then...
+     If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
+	 
 # TRIGGER: START NEW GAME
 {"type":"repeating", "auto":true, "conditional": false}
 	{"executeAs" : "@a[score_trigger_start_min=1]"}
 		-- Create the StartNewGame function caller, and set trigger_start to 0
-		/say I started a new game
-		{"type":"chain"}
 		/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
+		{"type":"chain"}
 		/scoreboard players set @p trigger_start 0
 	{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
@@ -50,54 +47,90 @@
 {"type":"repeating", "auto":true, "conditional": false}
 /kill @e[type=ArmorStand,name=StartNewGame]
 	{"conditional":true}
+	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
 	{"type":"chain", "conditional":false}
-	/clear @a[m=adventure]
-	/give @a[m=adventure] minecraft:bow
-	/give @a[m=adventure] minecraft:arrow 64
-	/execute @a[m=adventure] ~ ~ ~ tp @p @r[type=ArmorStand,name=startingPoint]
-	/scoreboard players set @a[m=adventure] ingame 1
-	-- Clone "SPECTATE WALL" wall
+	-- Set lives to 10 and mark players "ingame" 0 to spawn them
+	/scoreboard objectives setdisplay sidebar lives
+	/scoreboard players set @a[m=adventure] lives 10
+	/scoreboard players set @a[m=adventure] ingame 0
+	-- Clone SPECTATE WALL
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
+
+# HANDLE SPAWNING IN PLAYERS
+{"type":"repeating", "auto":true, "conditional":false}	
+{"executeAs":"@a[m=adventure,score_ingame_min=0,score_ingame=0]"}
+	/clear @p 
+	{"type":"chain"}
+	/give @p minecraft:bow
+	/give @p minecraft:arrow 64
+	/tp @p @r[type=ArmorStand,name=startingPoint]
+	/scoreboard players set @p ingame 1
+{"executeAs":""}
+	
+# DEATH HANDLING
+{"type":"repeating", "auto":true}
+/scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
+	{"type":"chain"}
+	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
+	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
+	
+	-- Handle player death
+	{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
+		/scoreboard players set @p ingame 3
+		/scoreboard players remove @p lives 1
+		/scoreboard players set @p damage 0
+		/scoreboard players set @p killed 0
+	{"executeAs":""}
+	
+	-- Announce if the player is out and reset scoreboards
+	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
+		/tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]
+		/scoreboard players reset @p ingame
+		/scoreboard players reset @p lives
+	{"executeAs":""}
+	-- Respawn if player has lives
+	/scoreboard players set @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives_min=1] ingame 0
 	
 # TRIGGER: SPECTATE
-{"type":"repeating", "auto":true, "conditional": false}
+{"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_spectate_min=1]"}
 		-- Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
 		/gamemode spectator @p
 		{"type":"chain"}
 		/tp @p @r[type=ArmorStand,name=startingPoint]
 		/scoreboard players set @p trigger_spectate 0
-	{"executeAs" : ""}
+	{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
 
 # GAME END DETECT
-{"type":"repeating", "auto":true, "conditional": false}
+{"type":"repeating", "auto":true, "conditional":false}
 /scoreboard players set @e[name=SYSTEM] testforOutput -1
 	{"type":"chain"}
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
-	/testfor @a[m=adventure,score_ingame_min=1,score_ingame=1]
+	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
 	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"func_EndGame"}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
 # FUNCTION: END GAME
-{"type":"repeating", "auto":true, "conditional": false}
+{"type":"repeating", "auto":true, "conditional":false}
 /kill @e[type=ArmorStand,name=func_EndGame]
 	{"conditional":true}
 	-- Announce winner
-	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+	/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"type":"chain", "conditional":false}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
 	/clear @a[m=adventure]
 	/effect @a[m=adventure] minecraft:saturation 1 100 true
 	/effect @a[m=adventure] minecraft:instant_health 1 100 true
-	/tp @a[m=!creative] -24 6 -56 0 0
-	/scoreboard players reset @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame
+	/tp @a[m=adventure] -24 6 -56 0 0
+	/scoreboard players reset @a[m=adventure] ingame
+	/scoreboard players reset @a[m=adventure] lives
+	/scoreboard objectives setdisplay sidebar
 	-- Clone "START GAME" wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
-	
 	
 # --
 # SUMMON NEW GAME
