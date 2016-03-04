@@ -56,14 +56,14 @@
 {"type":"repeating", "auto":true, "conditional":false}
 /testfor @e[type=ArmorStand,name=Countdown]
 	{"conditional":true}
-	/execute @e[name=SYSTEM,score_countdown=100,score_countdown_min=100] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"5","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	/execute @e[name=SYSTEM,score_countdown=100,score_countdown_min=100] ~ ~ ~ title @a title {"text":"5","color":"red","bold":"true"}
 	{"type":"chain","conditional":false}
-	/execute @e[name=SYSTEM,score_countdown=80,score_countdown_min=80] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"4","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
-	/execute @e[name=SYSTEM,score_countdown=60,score_countdown_min=60] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"3","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
-	/execute @e[name=SYSTEM,score_countdown=40,score_countdown_min=40] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"2","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
-	/execute @e[name=SYSTEM,score_countdown=20,score_countdown_min=20] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"1","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	/execute @e[name=SYSTEM,score_countdown=80,score_countdown_min=80] ~ ~ ~ title @a title {"text":"4","color":"red","bold":"true"}
+	/execute @e[name=SYSTEM,score_countdown=60,score_countdown_min=60] ~ ~ ~ title @a title {"text":"3","color":"red","bold":"true"}
+	/execute @e[name=SYSTEM,score_countdown=40,score_countdown_min=40] ~ ~ ~ title @a title {"text":"2","color":"red","bold":"true"}
+	/execute @e[name=SYSTEM,score_countdown=20,score_countdown_min=20] ~ ~ ~ title @a title {"text":"1","color":"red","bold":"true"}
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
-		/execute @a ~ ~ ~ title @p title {"text":"Go!","color":"green","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+		/title @a title {"text":"Go!","color":"green","bold":"true"}
 		/kill @e[type=ArmorStand,name=Countdown]
 			{"conditional":true}
 			/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
