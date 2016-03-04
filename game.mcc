@@ -80,6 +80,7 @@
 	-- Set lives to 10 and mark players "ingame" 0 to spawn them
 	/scoreboard objectives setdisplay sidebar lives
 	/scoreboard players set @a[m=adventure] lives 10
+	/scoreboard players set @a[m=adventure] killed 0
 	/scoreboard players set @a[m=adventure] ingame 0
 	-- Clone SPECTATE WALL
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
