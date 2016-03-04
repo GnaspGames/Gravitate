@@ -34,17 +34,44 @@
      If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
 	 
 # TRIGGER: START NEW GAME
-{"type":"repeating", "auto":true, "conditional": false}
+{"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_start_min=1]"}
-		-- Create the StartNewGame function caller, and set trigger_start to 0
-		/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
+		-- Create the StartCountdown function caller, and set trigger_start to 0
+		/summon ArmorStand ~ ~ ~ {CustomName:StartCountdown,Invisible:true,NoGravity:true,Marker:true}
 		{"type":"chain"}
 		/scoreboard players set @p trigger_start 0
 	{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
 	
+# FUNCTION: START COUNTDOWN
+{"type":"repeating", "auto":true, "conditional":false}
+/kill @e[type=ArmorStand,name=StartCountdown]
+	{"conditional":true}
+	/title @a times 0 40 20
+	{"type":"chain","conditional":false}
+	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 100
+	/summon ArmorStand ~ ~ ~ {CustomName:Countdown,Invisible:true,NoGravity:true,Marker:true}
+		
+# FUNCTION: COUNTDOWN
+{"type":"repeating", "auto":true, "conditional":false}
+/testfor @e[type=ArmorStand,name=Countdown]
+	{"conditional":true}
+	/execute @e[name=SYSTEM,score_countdown=100,score_countdown_min=100] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"5","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	{"type":"chain","conditional":false}
+	/execute @e[name=SYSTEM,score_countdown=80,score_countdown_min=80] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"4","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	/execute @e[name=SYSTEM,score_countdown=60,score_countdown_min=60] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"3","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	/execute @e[name=SYSTEM,score_countdown=40,score_countdown_min=40] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"2","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	/execute @e[name=SYSTEM,score_countdown=20,score_countdown_min=20] ~ ~ ~ execute @a ~ ~ ~ title @p title {"text":"1","color":"red","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
+		/execute @a ~ ~ ~ title @p title {"text":"Go!","color":"green","bold":"true","underlined":"false","italic":"false","strikethrough":"false","obfuscated":"false"}
+		/kill @e[type=ArmorStand,name=Countdown]
+			{"conditional":true}
+			/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
+	{"executeAs":"", "conditional":false}
+	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
+	
 # FUNCTION: START NEW GAME
-{"type":"repeating", "auto":true, "conditional": false}
+{"type":"repeating", "auto":true, "conditional":false}
 /kill @e[type=ArmorStand,name=StartNewGame]
 	{"conditional":true}
 	-- Reset player gamemode, includes those spectating
@@ -118,7 +145,10 @@
 /kill @e[type=ArmorStand,name=func_EndGame]
 	{"conditional":true}
 	-- Announce winner
-	/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
+		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+	{"executeAs":""}
 	{"type":"chain", "conditional":false}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
