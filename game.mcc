@@ -132,24 +132,29 @@
 	
 # EVENTS
 {"type":"repeating", "auto":true}
-	{"executeAs":"@e[score_timer=30,score_timer_min=30,tag=!eventActive]"}
-		/say START EVENT 1
+	{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
+		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
 	{"type":"chain"}
+		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
 		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=35,score_timer_min=35,tag=eventActive]"}
-		/say STOP EVENT 1
+	{"executeAs":"@e[score_timer=180,score_timer_min=180,tag=eventActive]"}
+		/kill @e[type=Shulker]
 		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=60,score_timer_min=60,tag=!eventActive]"}
-		/say START EVENT 2
+	{"executeAs":"@e[score_timer=240,score_timer_min=240,tag=!eventActive]"}
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/tellraw @a [{"text":"Watch out! Something ghastly just got here.","color":"red"}]
 		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=65,score_timer_min=65,tag=eventActive]"}
-		/say STOP EVENT 2
+	{"executeAs":"@e[score_timer=270,score_timer_min=270,tag=eventActive]"}
+		/kill @e[type=Ghast]
 		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=90,score_timer_min=90,tag=!eventActive]"}
-		/say START EVENT 3
+	{"executeAs":"@e[score_timer=360,score_timer_min=360,tag=!eventActive]"}
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon WitherBoss ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon WitherBoss ~ ~ ~
+		/tellraw @a [{"text":"Watch out! Wither you'll survive, no body knows.","color":"red"}]
 		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=95,score_timer_min=95,tag=eventActive]"}
-		/say STOP EVENT 3
+	{"executeAs":"@e[score_timer=390,score_timer_min=390,tag=eventActive]"}
+		/kill @e[type=WitherBoss]
 		/scoreboard players tag @e[r=0] remove eventActive
 	{"executeAs":""}
 	
