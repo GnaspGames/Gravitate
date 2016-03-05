@@ -148,9 +148,9 @@
 	-- Announce winner
 	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+		{"type":"chain", "conditional":false}
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"executeAs":""}
-	{"type":"chain", "conditional":false}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
 	/clear @a[m=adventure]
