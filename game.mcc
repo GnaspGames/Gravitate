@@ -176,12 +176,12 @@
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"func_EndGame"}
+	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"EndGame"}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
 # FUNCTION: END GAME
 {"type":"repeating", "auto":true, "conditional":false}
-/kill @e[type=ArmorStand,name=func_EndGame]
+/kill @e[type=ArmorStand,name=EndGame]
 	{"conditional":true}
 	-- Announce winner
 	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
