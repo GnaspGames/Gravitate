@@ -1,9 +1,10 @@
 # Restart Map
 {"type":"repeating", "auto": true}
-/scoreboard players test MapState vars 0 0
+/kill @e[type=ArmorStand,name=RESET]
 	{"conditional":true}
-	/scoreboard players set MapState vars 1
+	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say RESETTING MAP
 		{"type":"chain", "conditional":false}
+		-- Use correct game rules
 		/gamerule doDaylightCycle false
 		/gamerule logAdminCommands false
 		/gamerule doMobSpawning false
@@ -11,6 +12,7 @@
 		/gamerule showDeathMessages false
 		/gamerule commandBlockOutput false
 		/gamerule sendCommandFeedback false
+		-- Reset all objectives
 		/scoreboard objectives remove lobbyStatus
 		/scoreboard objectives add lobbyStatus dummy Lobby Status
 		/scoreboard objectives remove effects
@@ -33,8 +35,12 @@
 		/scoreboard objectives add trigger_start trigger
 		/scoreboard objectives remove trigger_spectate
 		/scoreboard objectives add trigger_spectate trigger
+		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
 		/summon ArmorStand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
+		-- Clone "START GAME" wall
+		/clone -26 2 -45 -23 3 -44 -26 5 -50
+		-- Finish
 		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 	
 # Catch new players
@@ -54,7 +60,4 @@
 # ----
 # Trigger reset
 {"type":"impulse","auto":false,"conditional":false}
-/scoreboard objectives remove vars
-	{"type":"chain","auto":true}
-	/scoreboard objectives add vars dummy Variables
-	/scoreboard players set MapState vars 0
+/summon ArmorStand ~ ~ ~ {CustomName:RESET}
