@@ -84,6 +84,9 @@
 	/scoreboard players set @a[m=adventure] ingame 0
 	-- Clone SPECTATE WALL
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
+	-- Start timer (86400 seconds is 24 hours)
+	/worldborder set 1000000
+	/worldborder set 1086400 86400
 
 # HANDLE SPAWNING IN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
@@ -119,6 +122,36 @@
 	{"executeAs":""}
 	-- Respawn if player has lives
 	/scoreboard players set @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives_min=1] ingame 0
+	
+# TIMER
+{"type":"repeating", "auto":true}
+/worldborder get
+	{"type":"chain"}
+	/stats block ~-1 ~ ~ set QueryResult @e[type=ArmorStand,name=SYSTEM] timer 
+	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] timer 1000000 
+	
+# EVENTS
+{"type":"repeating", "auto":true}
+	{"executeAs":"@e[score_timer=30,score_timer_min=30,tag=!eventActive]"}
+		/say START EVENT 1
+	{"type":"chain"}
+		/scoreboard players tag @e[r=0] add eventActive
+	{"executeAs":"@e[score_timer=35,score_timer_min=35,tag=eventActive]"}
+		/say STOP EVENT 1
+		/scoreboard players tag @e[r=0] remove eventActive
+	{"executeAs":"@e[score_timer=60,score_timer_min=60,tag=!eventActive]"}
+		/say START EVENT 2
+		/scoreboard players tag @e[r=0] add eventActive
+	{"executeAs":"@e[score_timer=65,score_timer_min=65,tag=eventActive]"}
+		/say STOP EVENT 2
+		/scoreboard players tag @e[r=0] remove eventActive
+	{"executeAs":"@e[score_timer=90,score_timer_min=90,tag=!eventActive]"}
+		/say START EVENT 3
+		/scoreboard players tag @e[r=0] add eventActive
+	{"executeAs":"@e[score_timer=95,score_timer_min=95,tag=eventActive]"}
+		/say STOP EVENT 3
+		/scoreboard players tag @e[r=0] remove eventActive
+	{"executeAs":""}
 	
 # TRIGGER: SPECTATE
 {"type":"repeating", "auto":true, "conditional":false}
@@ -160,13 +193,10 @@
 	/scoreboard players reset @a[m=adventure] ingame
 	/scoreboard players reset @a[m=adventure] lives
 	/scoreboard objectives setdisplay sidebar
-	-- Clone "START GAME" wall
+	-- Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
-	
-# --
-# SUMMON NEW GAME
-{"type":"impulse", "auto":false, "conditional": false}
-/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame}
+	-- Stop the timer
+	/worldborder set 1000000
 
 
 
