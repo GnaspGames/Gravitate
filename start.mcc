@@ -37,6 +37,9 @@
 		/scoreboard objectives add trigger_start trigger
 		/scoreboard objectives remove trigger_spectate
 		/scoreboard objectives add trigger_spectate trigger
+		-- Setup worldborder
+		/worldborder center 0 0
+		/worldborder set 1000000
 		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
 		/summon ArmorStand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }

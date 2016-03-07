@@ -9,7 +9,7 @@
 1 = Slow Falling
 2 = Rising (from airvent)
 	
-# PLAYER EFFECTS
+# EFFECTS
 {"type":"repeating", "auto":true}
 	/effect @a[m=adventure] clear
 	{"type":"chain"}
@@ -121,7 +121,7 @@
 	-- Respawn if player has lives
 	/scoreboard players set @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives_min=1] ingame 0
 	
-# TIMER
+# WORLDBORDER TIMER
 {"type":"repeating", "auto":true}
 /worldborder get
 	{"type":"chain"}
