@@ -105,7 +105,6 @@
 	{"type":"chain"}
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
-	
 	-- Handle player death
 	{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
 		/scoreboard players set @p ingame 3
@@ -113,7 +112,6 @@
 		/scoreboard players set @p damage 0
 		/scoreboard players set @p killed 0
 	{"executeAs":""}
-	
 	-- Announce if the player is out and reset scoreboards
 	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
 		/tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]
