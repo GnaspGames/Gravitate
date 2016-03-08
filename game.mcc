@@ -94,6 +94,7 @@
 	/clear @p 
 	{"type":"chain"}
 	/give @p minecraft:bow
+	/give @p minecraft:stone_sword
 	/give @p minecraft:arrow 64
 	/tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @p ingame 1

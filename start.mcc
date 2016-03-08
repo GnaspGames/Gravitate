@@ -12,6 +12,7 @@
 		/gamerule showDeathMessages false
 		/gamerule commandBlockOutput false
 		/gamerule sendCommandFeedback false
+		/gamerule keepInventory true
 		-- Reset all objectives
 		/scoreboard objectives remove lobbyStatus
 		/scoreboard objectives add lobbyStatus dummy Lobby Status
