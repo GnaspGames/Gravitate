@@ -33,7 +33,7 @@
  3 = Died, loose a life, then...
      If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
 	 
-# TRIGGER: START NEW GAME
+# TRIGGER NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_start_min=1]"}
 		-- Create the StartCountdown function caller, and set trigger_start to 0
@@ -43,7 +43,7 @@
 	{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
 	
-# FUNCTION: START COUNTDOWN
+# START COUNTDOWN
 {"type":"repeating", "auto":true, "conditional":false}
 /kill @e[type=ArmorStand,name=StartCountdown]
 	{"conditional":true}
@@ -52,7 +52,7 @@
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 100
 	/summon ArmorStand ~ ~ ~ {CustomName:Countdown,Invisible:true,NoGravity:true,Marker:true}
 		
-# FUNCTION: COUNTDOWN
+# COUNTDOWN
 {"type":"repeating", "auto":true, "conditional":false}
 /testfor @e[type=ArmorStand,name=Countdown]
 	{"conditional":true}
@@ -70,7 +70,7 @@
 	{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
-# FUNCTION: START NEW GAME
+# START NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
 /kill @e[type=ArmorStand,name=StartNewGame]
 	{"conditional":true}
@@ -88,7 +88,7 @@
 	/worldborder set 1000000
 	/worldborder set 1086400 86400
 
-# HANDLE SPAWNING IN PLAYERS
+# SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
 {"executeAs":"@a[m=adventure,score_ingame_min=0,score_ingame=0]"}
 	/clear @p 
@@ -188,7 +188,7 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 	{"executeAs":""}
 	
-# TRIGGER: SPECTATE
+# SPECTATE
 {"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_spectate_min=1]"}
 		-- Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
@@ -199,7 +199,7 @@
 	{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
 
-# GAME END DETECT
+# END DETECT
 {"type":"repeating", "auto":true, "conditional":false}
 /scoreboard players set @e[name=SYSTEM] testforOutput -1
 	{"type":"chain"}
@@ -209,7 +209,7 @@
 	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"EndGame"}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
-# FUNCTION: END GAME
+# END GAME
 {"type":"repeating", "auto":true, "conditional":false}
 /kill @e[type=ArmorStand,name=EndGame]
 	{"conditional":true}
