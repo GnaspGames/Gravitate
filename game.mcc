@@ -36,8 +36,8 @@
 # TRIGGER NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_start_min=1]"}
-		-- Create the StartCountdown function caller, and set trigger_start to 0
-		/summon ArmorStand ~ ~ ~ {CustomName:StartCountdown,Invisible:true,NoGravity:true,Marker:true}
+		-- Call the StartCountdown function, and set trigger_start to 0
+		!run_function StartCountdown
 		{"type":"chain"}
 		/scoreboard players set @p trigger_start 0
 	{"executeAs" : ""}
@@ -45,16 +45,16 @@
 	
 # START COUNTDOWN
 {"type":"repeating", "auto":true, "conditional":false}
-/kill @e[type=ArmorStand,name=StartCountdown]
+!function StartCountdown
 	{"conditional":true}
 	/title @a times 0 40 20
 	{"type":"chain","conditional":false}
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 100
-	/summon ArmorStand ~ ~ ~ {CustomName:Countdown,Invisible:true,NoGravity:true,Marker:true}
+	!run_loop Countdown
 		
 # COUNTDOWN
 {"type":"repeating", "auto":true, "conditional":false}
-/testfor @e[type=ArmorStand,name=Countdown]
+!loop Countdown
 	{"conditional":true}
 	/execute @e[name=SYSTEM,score_countdown=100,score_countdown_min=100] ~ ~ ~ title @a title {"text":"5","color":"red","bold":"true"}
 	{"type":"chain","conditional":false}
@@ -64,15 +64,15 @@
 	/execute @e[name=SYSTEM,score_countdown=20,score_countdown_min=20] ~ ~ ~ title @a title {"text":"1","color":"red","bold":"true"}
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
-		/kill @e[type=ArmorStand,name=Countdown]
+		!exit_loop Countdown
 			{"conditional":true}
-			/summon ArmorStand ~ ~ ~ {CustomName:StartNewGame,Invisible:true,NoGravity:true,Marker:true}
+			!run_function StartNewGame
 	{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
 # START NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
-/kill @e[type=ArmorStand,name=StartNewGame]
+!function StartNewGame
 	{"conditional":true}
 	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
@@ -84,9 +84,8 @@
 	/scoreboard players set @a[m=adventure] ingame 0
 	-- Clone SPECTATE WALL
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
-	-- Start timer (86400 seconds is 24 hours)
-	/worldborder set 1000000
-	/worldborder set 1086400 86400
+	-- Start the timer
+	!run_function StartTimer
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
@@ -107,7 +106,7 @@
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
 	-- Handle player death
-	{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
+	{"executeAs":"@a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed_min=1,score_timeSinceDeath_min=1]"}
 		/scoreboard players set @p ingame 3
 		/scoreboard players remove @p lives 1
 		/scoreboard players set @p damage 0
@@ -121,72 +120,6 @@
 	{"executeAs":""}
 	-- Respawn if player has lives
 	/scoreboard players set @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives_min=1] ingame 0
-	
-# WORLDBORDER TIMER
-{"type":"repeating", "auto":true}
-/worldborder get
-	{"type":"chain"}
-	/stats block ~-1 ~ ~ set QueryResult @e[type=ArmorStand,name=SYSTEM] timer 
-	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] timer 1000000 
-	
-# EVENTS
-{"type":"repeating", "auto":true}
-	{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-	{"type":"chain"}
-		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
-		/title @a title {"text":"!","color":"red","bold":"true"}
-		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=180,score_timer_min=180,tag=eventActive]"}
-		/kill @e[type=Shulker]
-		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=240,score_timer_min=240,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Something ghastly just got here.","color":"red"}]
-		/title @a title {"text":"!","color":"red","bold":"true"}
-		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=270,score_timer_min=270,tag=eventActive]"}
-		/kill @e[type=Ghast]
-		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=360,score_timer_min=360,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/tellraw @a [{"text":"Watch out! It's getting blazing hot in here.","color":"red"}]
-		/title @a title {"text":"!","color":"red","bold":"true"}
-		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=390,score_timer_min=390,tag=eventActive]"}
-		/kill @e[type=Blaze]
-		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=480,score_timer_min=480,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
-		/tellraw @a [{"text":"Watch out! No need to shulk about it.","color":"red"}]
-		/title @a title {"text":"!","color":"red","bold":"true"}
-		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=540,score_timer_min=540,tag=eventActive]"}
-		/kill @e[type=Shulker]
-		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":"@e[score_timer=600,score_timer_min=600,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Let's mix it up now.","color":"red"}]
-		/title @a title {"text":"!","color":"red","bold":"true"}
-		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=660,score_timer_min=660,tag=eventActive]"}	
-		/kill @e[type=Shulker]
-		/kill @e[type=Ghast]
-		/kill @e[type=Blaze]
-		/scoreboard players tag @e[r=0] remove eventActive
-	{"executeAs":""}
 	
 # SPECTATE
 {"type":"repeating", "auto":true, "conditional":false}
@@ -206,12 +139,14 @@
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	/execute @e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1] ~ ~ ~ summon ArmorStand ~ ~ ~ {CustomName:"EndGame"}
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1]"}
+		!run_function EndGame
+	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
 # END GAME
 {"type":"repeating", "auto":true, "conditional":false}
-/kill @e[type=ArmorStand,name=EndGame]
+!function EndGame
 	{"conditional":true}
 	-- Announce winner
 	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
@@ -235,7 +170,7 @@
 	-- Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
 	-- Stop the timer
-	/worldborder set 1000000
+	!run_function StopTimer
 
 
 
