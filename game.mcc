@@ -5,9 +5,9 @@
 	/execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200	
 
 --- Effects Score ---
-0 = No Effects (from taking damage)
-1 = Slow Falling
-2 = Rising (from airvent)
+0 = No Levitation, but still has jump boost
+1 = Slow Falling levitation & jump boost
+2 = Rising levitation (from airvent)
 	
 # EFFECTS
 {"type":"repeating", "auto":true}
@@ -20,6 +20,7 @@
 		/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
 		-- Set to 0 if player has taken damage (and reduce damage score)
 		/scoreboard players set @a[score_damage_min=1] effects 0
+		-- Reduce damage score so that falling stops when gone
 		/scoreboard players remove @a[score_damage_min=1] damage 2
 		-- Apply effects based on score
 		/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
