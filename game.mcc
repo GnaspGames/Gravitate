@@ -78,13 +78,16 @@
 	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
 	{"type":"chain", "conditional":false}
-	-- Set lives to 10 and mark players "ingame" 0 to spawn them
+	-- Set lives and mark players "ingame" 0 to spawn them
 	/scoreboard objectives setdisplay sidebar lives
-	/scoreboard players set @a[m=adventure] lives 10
+	/scoreboard players set @a[m=adventure] lives 0
+	/scoreboard players operation @a[m=adventure] lives = $lives vars
 	/scoreboard players set @a[m=adventure] killed 0
 	/scoreboard players set @a[m=adventure] ingame 0
-	-- Clone SPECTATE WALL
+	-- Clone SPECTATE wall
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
+	-- Blank SETTINGS wall
+	/clone -26 2 -74 -23 3 -73 -26 5 -64
 	-- Start the timer
 	!run_function StartTimer
 
@@ -107,7 +110,7 @@
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
 	-- Handle player death
-	{"executeAs":"@a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed_min=1,score_timeSinceDeath_min=1]"}
+	{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
 		/scoreboard players set @p ingame 3
 		/scoreboard players remove @p lives 1
 		/scoreboard players set @p damage 0
@@ -170,6 +173,8 @@
 	/kill @e[type=Blaze]
 	-- Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
+	-- Clone SETTINGS wall
+	/clone -26 2 -70 -23 3 -69 -26 5 -64
 	-- Stop the timer
 	!run_function StopTimer
 

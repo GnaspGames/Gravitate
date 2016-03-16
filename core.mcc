@@ -14,6 +14,8 @@
 		/gamerule sendCommandFeedback false
 		/gamerule keepInventory true
 		-- Reset all objectives
+		/scoreboard objectives remove vars
+		/scoreboard objectives add vars dummy Variables		
 		/scoreboard objectives remove lobbyStatus
 		/scoreboard objectives add lobbyStatus dummy Lobby Status
 		/scoreboard objectives remove effects
@@ -38,14 +40,20 @@
 		/scoreboard objectives add trigger_start trigger
 		/scoreboard objectives remove trigger_spectate
 		/scoreboard objectives add trigger_spectate trigger
+		/scoreboard objectives remove trigger_settings
+		/scoreboard objectives add trigger_settings trigger
 		-- Setup worldborder
 		/worldborder center 0 0
 		/worldborder set 1000000
 		-- Recreate SYSTEM entity
 		/kill @e[type=ArmorStand,name=SYSTEM]
 		/summon ArmorStand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
-		-- Clone "START GAME" wall
+		-- Clone START GAME wall
 		/clone -26 2 -45 -23 3 -44 -26 5 -50
+		-- Prepare settings and clone SETTINGS wall
+		/scoreboard players set $lives vars 10
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 10\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 1\"}}"}
+		/clone -26 2 -70 -23 3 -69 -26 5 -64
 		-- Finish
 		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 	
@@ -61,6 +69,7 @@
 			/spawnpoint -24 6 -56
 			/scoreboard players enable @p trigger_start
 			/scoreboard players enable @p trigger_spectate
+			/scoreboard players enable @p trigger_settings
 			/scoreboard players set @p lobbyStatus 1
 		{"executeAs":""}
 		

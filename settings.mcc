@@ -1,0 +1,24 @@
+
+# TRIGGER SETTINGS HANDLING
+{"type":"repeating", "auto":true, "conditional":false}
+	{"executeAs" : "@a[score_trigger_settings_min=1,score_trigger_settings=1]"}
+		/scoreboard players set $lives vars 1
+		{"type":"chain"}
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 1\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 2\"}}"}
+	{"executeAs" : "@a[score_trigger_settings_min=2,score_trigger_settings=2]"}
+		/scoreboard players set $lives vars 3
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 3\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 3\"}}"}
+	{"executeAs" : "@a[score_trigger_settings_min=3,score_trigger_settings=3]"}
+		/scoreboard players set $lives vars 5
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 5\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 4\"}}"}
+	{"executeAs" : "@a[score_trigger_settings_min=4,score_trigger_settings=4]"}
+		/scoreboard players set $lives vars 10
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 10\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 1\"}}"}
+	{"executeAs" : "@a[score_trigger_settings_min=1]"}
+		-- Clone SETTINGS wall after block data changed
+		/clone -26 2 -70 -23 3 -69 -26 5 -64
+		-- Reset trigger_settings
+		/scoreboard players enable @a trigger_settings
+		/scoreboard players set @p trigger_settings 0
+	{"executeAs" : ""}
+	
