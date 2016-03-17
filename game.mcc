@@ -45,24 +45,31 @@
 	/scoreboard players enable @a trigger_start
 	
 # START COUNTDOWN
-{"type":"repeating", "auto":true, "conditional":false}
 !function StartCountdown
-	{"conditional":true}
+	{"type":"chain", "auto":true, "conditional":false}
 	/title @a times 0 40 20
-	{"type":"chain","conditional":false}
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 100
 	!run_loop Countdown
 		
 # COUNTDOWN
-{"type":"repeating", "auto":true, "conditional":false}
 !loop Countdown
-	{"conditional":true}
-	/execute @e[name=SYSTEM,score_countdown=100,score_countdown_min=100] ~ ~ ~ title @a title {"text":"5","color":"red","bold":"true"}
-	{"type":"chain","conditional":false}
-	/execute @e[name=SYSTEM,score_countdown=80,score_countdown_min=80] ~ ~ ~ title @a title {"text":"4","color":"red","bold":"true"}
-	/execute @e[name=SYSTEM,score_countdown=60,score_countdown_min=60] ~ ~ ~ title @a title {"text":"3","color":"red","bold":"true"}
-	/execute @e[name=SYSTEM,score_countdown=40,score_countdown_min=40] ~ ~ ~ title @a title {"text":"2","color":"red","bold":"true"}
-	/execute @e[name=SYSTEM,score_countdown=20,score_countdown_min=20] ~ ~ ~ title @a title {"text":"1","color":"red","bold":"true"}
+	{"type":"chain", "auto":true, "conditional":false}
+	{"executeAs":"@e[name=SYSTEM,score_countdown=100,score_countdown_min=100]"}
+		/title @a reset
+		/title @a title {"text":"5","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=80,score_countdown_min=80]"}	
+		/title @a title {"text":"4","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
+		/title @a title {"text":"3","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=40,score_countdown_min=40]"}
+		/title @a title {"text":"2","color":"red","bold":"true"}
+		
+	{"executeAs":"@e[name=SYSTEM,score_countdown=20,score_countdown_min=20]"}
+		/title @a title {"text":"1","color":"red","bold":"true"}
+		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
 		!exit_loop Countdown
@@ -72,12 +79,10 @@
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
 # START NEW GAME
-{"type":"repeating", "auto":true, "conditional":false}
 !function StartNewGame
-	{"conditional":true}
+	{"type":"chain", "auto":true, "conditional":false}
 	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
-	{"type":"chain", "conditional":false}
 	-- Set lives and mark players "ingame" 0 to spawn them
 	/scoreboard objectives setdisplay sidebar lives
 	/scoreboard players set @a[m=adventure] lives 0
@@ -149,13 +154,11 @@
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
 # END GAME
-{"type":"repeating", "auto":true, "conditional":false}
 !function EndGame
-	{"conditional":true}
+	{"type":"chain", "auto":true, "conditional":false}
 	-- Announce winner
 	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
-		{"type":"chain", "conditional":false}
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"executeAs":""}
 	-- Move everyone back to the lobby

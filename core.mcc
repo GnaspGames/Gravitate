@@ -81,17 +81,15 @@
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] timer 1000000 
 	
 # START TIMER
-{"type":"repeating", "auto":true}
 !function StartTimer
-	{"type":"chain","conditional":true}
+	{"type":"chain", "auto":true, "conditional":false}
 	-- Start timer (86400 seconds is 24 hours)
 	/worldborder set 1000000
 	/worldborder set 1086400 86400
 	
 # STOP TIMER
-{"type":"repeating", "auto":true, "conditional":false}
 !function StopTimer
-	{"type":"chain","conditional":true}
+	{"type":"chain", "auto":true, "conditional":false}
 	/worldborder set 1000000
 		
 #
