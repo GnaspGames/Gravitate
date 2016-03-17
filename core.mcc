@@ -70,6 +70,9 @@
 			/scoreboard players enable @p trigger_start
 			/scoreboard players enable @p trigger_spectate
 			/scoreboard players enable @p trigger_settings
+			/title @p times 0 40 20
+			/title @p subtitle {"text":"by Gnasp","color":"white"}
+			/title @p title {"text":"GRAVITATE","color":"green","bold":"true"}
 			/scoreboard players set @p lobbyStatus 1
 		{"executeAs":""}
 		
