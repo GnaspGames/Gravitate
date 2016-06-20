@@ -1,4 +1,4 @@
-# EVENTS
+# MOB EVENTS
 {"type":"repeating", "auto":true}
 	{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
 		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
