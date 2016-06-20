@@ -74,7 +74,7 @@
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
 		!exit_loop Countdown
 			{"conditional":true}
-			!run_function StartNewGame
+				!run_function StartNewGame
 	{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
