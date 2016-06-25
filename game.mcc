@@ -37,19 +37,19 @@
 # TRIGGER NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
 	{"executeAs" : "@a[score_trigger_start_min=1]"}
-		-- Call the StartCountdown function, and set trigger_start to 0
-		!run_function StartCountdown
+		-- Call the StartCountdown event, and set trigger_start to 0
+		!start_event StartCountdown
 		{"type":"chain"}
 		/scoreboard players set @p trigger_start 0
 	{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
 	
 # START COUNTDOWN
-!function StartCountdown
+!event StartCountdown
 	{"type":"chain", "auto":true, "conditional":false}
 	/title @a times 0 40 20
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 100
-	!run_loop Countdown
+	!start_loop Countdown
 		
 # COUNTDOWN
 !loop Countdown
@@ -72,14 +72,14 @@
 		
 	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
-		!exit_loop Countdown
+		!stop_loop Countdown
 			{"conditional":true}
-				!run_function StartNewGame
+				!start_event StartNewGame
 	{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
 # START NEW GAME
-!function StartNewGame
+!event StartNewGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
@@ -94,7 +94,7 @@
 	-- Blank SETTINGS wall
 	/clone -26 2 -74 -23 3 -73 -26 5 -64
 	-- Start the timer
-	!run_function StartTimer
+	!start_event StartTimer
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
@@ -149,12 +149,12 @@
 	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
 	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1]"}
-		!run_function EndGame
+		!start_event EndGame
 	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	
 # END GAME
-!function EndGame
+!event EndGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Announce winner
 	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
@@ -179,7 +179,7 @@
 	-- Clone SETTINGS wall
 	/clone -26 2 -70 -23 3 -69 -26 5 -64
 	-- Stop the timer
-	!run_function StopTimer
+	!start_event StopTimer
 
 
 
