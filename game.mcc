@@ -95,6 +95,8 @@
 	/clone -26 2 -74 -23 3 -73 -26 5 -64
 	-- Start the timer
 	!start_event StartTimer
+	-- Play music
+	/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 1 1 1
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
