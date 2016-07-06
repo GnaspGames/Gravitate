@@ -1,0 +1,19 @@
+-----------------------------------
+--- Weapon Effects              ---
+-----------------------------------
+
+
+-- # Arrow fixing
+-- {"type":"repeating", "auto":false}
+--    /effect @a[m=creative] minecraft:levitation 1 245 true
+--    {"type":"chain"}
+--    /entitydata @e[type=Arrow,tag=!fixed] {NoGravity:1b}
+--    /scoreboard players tag @e[type=Arrow,tag=!fixed] add flamed
+--    /scoreboard players tag @e[type=Arrow,tag=!fixed] add fixed
+--    /scoreboard players tag @e[type=Arrow,tag=flamed] remove flamed {inGround:1b}
+--    /execute @e[type=Arrow,tag=flamed] ~ ~ ~ particle flame ~ ~ ~ 0 0 0 0.2
+--    /execute @e[type=Arrow,tag=flamed] ~ ~ ~ kill @e[type=Pig,r=1]
+
+# Fireballs
+{"type":"repeating", "auto":true}
+    /execute @e[type=Snowball] ~ ~ ~ summon Fireball ~ ~ ~ {direction:[0.0,0.0,0.0],ExplosionPower:1}
