@@ -104,7 +104,8 @@
 	/clear @p 
 	{"type":"chain"}
 	/give @p minecraft:stone_sword
-	/give @p minecraft:snowball 64
+	/give @p minecraft:snowball 64 0 {display:{Name:Fireball}}
+	/give @p minecraft:snowball 64 0 {display:{Name:Fireball}}
 	/tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @p ingame 1
 {"executeAs":""}
