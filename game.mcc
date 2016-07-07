@@ -176,6 +176,8 @@
 	/kill @e[type=Shulker]
 	/kill @e[type=Ghast]
 	/kill @e[type=Blaze]
+	--- Kill any left over Fireballs
+	/kill @e[type=Fireball]
 	-- Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
 	-- Clone SETTINGS wall
