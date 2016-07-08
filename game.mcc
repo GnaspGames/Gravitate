@@ -96,7 +96,7 @@
 	-- Start the timer
 	!start_event StartTimer
 	-- Play music
-	/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 1 1 1
+	/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
@@ -172,6 +172,8 @@
 	/scoreboard players reset @a[m=adventure] ingame
 	/scoreboard players reset @a[m=adventure] lives
 	/scoreboard objectives setdisplay sidebar
+	--- Stop the music
+	/stopsound @a[m=adventure]
 	--- Kill all mobs
 	/kill @e[type=Shulker]
 	/kill @e[type=Ghast]
