@@ -11,21 +11,32 @@
 	
 # EFFECTS
 {"type":"repeating", "auto":true}
-	/effect @a[m=adventure] clear
+	-- Default score of 1
+	/scoreboard players set @a effects 1
 	{"type":"chain"}
-		-- Default score of 1
-		/scoreboard players set @a effects 1
 		-- Apply 2 if above a vent
 		/execute @e[name=airvent] ~ ~ ~ execute @a[dx=3,dy=53,dz=3] ~ ~ ~ scoreboard players set @p effects 2
 		/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=10,dz=3] ~ ~ ~ scoreboard players set @p effects 2
 		-- Set to 0 if player has taken damage (and reduce damage score)
 		/scoreboard players set @a[score_damage_min=1] effects 0
 		-- Reduce damage score so that falling stops when gone
-		/scoreboard players remove @a[score_damage_min=1] damage 2
+		/scoreboard players remove @a[score_damage_min=1] damage 3
 		-- Apply effects based on score
-		/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
-		/effect @a[m=adventure,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
-		/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
+			-- 0: If score is 0, remove all effects (free-falling)
+			/effect @a[m=adventure,score_effects_min=0,score_effects=0] clear
+			-- 0-1: Jump boost to avoid fall damage
+			/effect @a[m=adventure,score_effects_min=0,score_effects=1] minecraft:jump_boost 1 254 true
+			-- 1: For "slow falling", use a matrix of AECs to apply -11 levitation.
+			{"executeAs":"@a[m=adventure,score_effects_min=1,score_effects=1]"}
+				-- /effect @a[m=adventure,score_effects_min=1,score_effects=1] minecraft:levitation 1 245 true
+				/summon AreaEffectCloud ~ ~1 ~ {Radius:1f,Particle:take,Age:0,Duration:6,Effects:[{Id:25,Amplifier:-11,Duration:40,ShowParticles:0b}]}
+				/summon AreaEffectCloud ~ ~ ~ {Radius:1f,Particle:take,Age:0,Duration:6,Effects:[{Id:25,Amplifier:-11,Duration:40,ShowParticles:0b}]}
+				/summon AreaEffectCloud ~ ~-1 ~ {Radius:1.5f,Particle:take,Age:0,Duration:6,Effects:[{Id:25,Amplifier:-11,Duration:40,ShowParticles:0b}]}
+				/summon AreaEffectCloud ~ ~-2 ~ {Radius:1.5f,Particle:take,Age:0,Duration:6,Effects:[{Id:25,Amplifier:-11,Duration:40,ShowParticles:0b}]}
+			{"executeAs":""}
+			-- 2: For Rising, first clear any falling effect and then apply levitation 8.
+			/effect @a[m=adventure,score_effects_min=2,score_effects=2] clear
+			/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
 	
  --- In Game ---
  0 = Spawn into the game
@@ -104,8 +115,9 @@
 	/clear @p 
 	{"type":"chain"}
 	/give @p minecraft:stone_sword
-	/give @p minecraft:snowball 64 0 {display:{Name:Fireball}}
-	/give @p minecraft:snowball 64 0 {display:{Name:Fireball}}
+	/give @p minecraft:bow
+	/give @p minecraft:arrow 64
+	/give @p minecraft:snowball 16 0 {display:{Name:Fireball}}
 	/tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @p ingame 1
 {"executeAs":""}
