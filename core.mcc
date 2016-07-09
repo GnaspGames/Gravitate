@@ -53,9 +53,13 @@
 		-- Clone START GAME wall
 		/clone -26 2 -45 -23 3 -44 -26 5 -50
 		-- Prepare settings and clone SETTINGS wall
-		/scoreboard players set $lives vars 10
-		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 10\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 1\"}}"}
+		/scoreboard players set $lives vars 3
+		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 3\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 3\"}}"}
+		!start_loop MobEvents
+		/blockdata -25 3 -69 {Text2: "{\"text\":\"MOBS: ON\",\"color\":\"dark_green\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 6\"}}"}		
 		/clone -26 2 -70 -23 3 -69 -26 5 -64
+		-- Stop all sounds
+		/stopsound @a
 		-- Finish
 		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 	

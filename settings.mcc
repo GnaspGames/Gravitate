@@ -4,16 +4,34 @@
 	{"executeAs" : "@a[score_trigger_settings_min=1,score_trigger_settings=1]"}
 		/scoreboard players set $lives vars 1
 		{"type":"chain"}
+		/tellraw @a [{"text":"Lives: 1","color":"blue"}]
+		/tellraw @a [{"text":"Each player gets 1 life. This won't last long!'","color":"white"}]
 		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 1\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 2\"}}"}
 	{"executeAs" : "@a[score_trigger_settings_min=2,score_trigger_settings=2]"}
 		/scoreboard players set $lives vars 3
+		/tellraw @a [{"text":"Lives: 3","color":"blue"}]
+		/tellraw @a [{"text":"Each player gets 3 lives. Nice for a quick game.","color":"white"}]
 		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 3\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 3\"}}"}
 	{"executeAs" : "@a[score_trigger_settings_min=3,score_trigger_settings=3]"}
 		/scoreboard players set $lives vars 5
+		/tellraw @a [{"text":"Lives: 5","color":"blue"}]
+		/tellraw @a [{"text":"Each player gets 5 lives. You think you'll be bad at this?'","color":"white"}]
 		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 5\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 4\"}}"}
 	{"executeAs" : "@a[score_trigger_settings_min=4,score_trigger_settings=4]"}
 		/scoreboard players set $lives vars 10
+		/tellraw @a [{"text":"Lives: 10","color":"blue"}]
+		/tellraw @a [{"text":"Each player gets 10 lives. Wow. This could be a long game.","color":"white"}]
 		/blockdata -24 3 -69 {Text2: "{\"text\":\"LIVES: 10\",\"color\":\"blue\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 1\"}}"}
+	{"executeAs" : "@a[score_trigger_settings_min=5,score_trigger_settings=5]"}
+		!start_loop MobEvents
+		/tellraw @a [{"text":"Mob Events: On","color":"dark_green"}]
+		/tellraw @a [{"text":"Well, that might make things more interesting. Expect some visitors during the game.","color":"white"}]
+		/blockdata -25 3 -69 {Text2: "{\"text\":\"MOBS: ON\",\"color\":\"dark_green\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 6\"}}"}		
+	{"executeAs" : "@a[score_trigger_settings_min=6,score_trigger_settings=6]"}
+		!stop_loop MobEvents
+		/tellraw @a [{"text":"Mob Events: Off","color":"red"}]
+		/tellraw @a [{"text":"Too hard for you eh? Boring.","color":"white"}]
+		/blockdata -25 3 -69 {Text2: "{\"text\":\"MOBS: OFF\",\"color\":\"red\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 5\"}}"}
 	{"executeAs" : "@a[score_trigger_settings_min=1]"}
 		-- Clone SETTINGS wall after block data changed
 		/clone -26 2 -70 -23 3 -69 -26 5 -64
