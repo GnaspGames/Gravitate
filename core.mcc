@@ -20,6 +20,8 @@
 		/scoreboard objectives add lobbyStatus dummy Lobby Status
 		/scoreboard objectives remove effects
 		/scoreboard objectives add effects dummy Effects
+		/scoreboard objectives remove effectsTimer
+		/scoreboard objectives add effectsTimer dummy Effects Timer
 		/scoreboard objectives remove ingame
 		/scoreboard objectives add ingame dummy In Game
 		/scoreboard objectives remove damage
