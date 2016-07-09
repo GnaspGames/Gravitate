@@ -1,3 +1,9 @@
+----------------------------------
+---        Mob Events          ---
+----------------------------------
+-- Used to introduce mobs into the 
+-- arena at certain time intervals.
+
 #
 # EVENT 1
 {"type":"repeating", "auto":true}
