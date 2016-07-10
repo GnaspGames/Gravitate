@@ -75,7 +75,7 @@
 			{"type":"chain", "conditional":false}
 			/gamemode adventure @p
 			/clear @p
-			/spawnpoint -24 6 -56
+			/spawnpoint @p -24 6 -56
 			/scoreboard players enable @p trigger_start
 			/scoreboard players enable @p trigger_spectate
 			/scoreboard players enable @p trigger_settings
