@@ -141,7 +141,7 @@
 	-- Start the timer
 	!start_event StartTimer
 	-- Play music
-	/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+	/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	

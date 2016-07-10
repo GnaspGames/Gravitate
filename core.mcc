@@ -58,6 +58,9 @@
 		!start_loop MobEvents
 		/blockdata -25 3 -69 {Text2: "{\"text\":\"MOBS: ON\",\"color\":\"dark_green\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 6\"}}"}		
 		/clone -26 2 -70 -23 3 -69 -26 5 -64
+		-- Recreate SOUNDPLAYER entity
+		/kill @e[type=AreaEffectCloud,name=SOUNDPLAYER]
+		/summon AreaEffectCloud 56.0 65.0 -56.0 {Duration:2147483647,CustomName:SOUNDPLAYER}
 		-- Stop all sounds
 		/stopsound @a
 		-- Finish

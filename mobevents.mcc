@@ -12,8 +12,8 @@
 		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=40,score_timer_min=40,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -24,8 +24,8 @@
 		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=180,score_timer_min=180,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -38,8 +38,8 @@
 		/tellraw @a [{"text":"Watch out! Something ghastly just got here.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=270,score_timer_min=270,tag=eventActive]"}
 		/kill @e[type=Ghast]
@@ -52,8 +52,8 @@
 		/tellraw @a [{"text":"Watch out! It's getting blazing hot in here.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=390,score_timer_min=390,tag=eventActive]"}
 		/kill @e[type=Blaze]
@@ -65,8 +65,8 @@
 		/tellraw @a [{"text":"Watch out! No need to shulk about it.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=540,score_timer_min=540,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -84,8 +84,8 @@
 		/tellraw @a [{"text":"Watch out! Let's mix it up now.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
-		/playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=660,score_timer_min=660,tag=eventActive]"}	
 		/kill @e[type=Shulker]
