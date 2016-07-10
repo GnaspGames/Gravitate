@@ -7,16 +7,18 @@
 # ALL EVENTS
 !loop MobEvents
 {"type":"chain"}
-	{"executeAs":"@e[score_timer=20,score_timer_min=20,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
+	{"executeAs":"@e[score_timer=45,score_timer_min=45,tag=!eventActive]"}
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/tellraw @a [{"text":"Watch out! Hope you're having a blazing good time.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
-	{"executeAs":"@e[score_timer=40,score_timer_min=40,tag=eventActive]"}
-		/kill @e[type=Shulker]
+	{"executeAs":"@e[score_timer=90,score_timer_min=90,tag=eventActive]"}
+		/kill @e[type=Blaze]
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
@@ -25,7 +27,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=180,score_timer_min=180,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -39,7 +41,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=270,score_timer_min=270,tag=eventActive]"}
 		/kill @e[type=Ghast]
@@ -49,11 +51,14 @@
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
 		/tellraw @a [{"text":"Watch out! It's getting blazing hot in here.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=390,score_timer_min=390,tag=eventActive]"}
 		/kill @e[type=Blaze]
@@ -66,7 +71,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=540,score_timer_min=540,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -85,7 +90,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=660,score_timer_min=660,tag=eventActive]"}	
 		/kill @e[type=Shulker]
