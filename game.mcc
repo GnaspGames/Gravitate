@@ -152,6 +152,7 @@
 	/give @p minecraft:bow
 	/give @p minecraft:arrow 64
 	/give @p minecraft:snowball 16 0 {display:{Name:Fireball}}
+	/give @p tipped_arrow 16 0 {Potion:"minecraft:fire_resistance",display:{Name:Explosive Arrow}}
 	/tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @p ingame 1
 {"executeAs":""}

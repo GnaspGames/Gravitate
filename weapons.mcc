@@ -17,3 +17,18 @@
 # Fireballs
 {"type":"repeating", "auto":true}
     /execute @e[type=Snowball] ~ ~ ~ summon Fireball ~ ~ ~ {direction:[0.0,0.0,0.0],ExplosionPower:1}
+
+
+# Explosive Arrows
+{"type":"repeating","auto":true}
+/scoreboard players tag @e[type=Arrow] add ExplosiveArrow {Potion:"minecraft:fire_resistance"}
+	{"type":"chain"}
+    /entitydata @e[type=Arrow,tag=ExplosiveArrow] {Potion:""}
+	/execute @e[type=Arrow,tag=ExplosiveArrow] ~ ~ ~ particle flame ~ ~ ~ 0 0 0 0.01 10 force
+    /scoreboard players tag @e[type=Arrow,tag=ExplosiveArrow] add ExplodeArrow {life:1s}
+    /execute @e[type=Arrow,tag=ExplodeArrow] ~ ~ ~ playsound minecraft:entity.generic.explode master @p ~ ~ ~ 17 0.2 1
+    /execute @e[type=Arrow,tag=ExplodeArrow] ~ ~ ~ particle explode ~ ~ ~ 2 2 2 0.1 50 force
+    /execute @e[type=Arrow,tag=ExplodeArrow] ~ ~ ~ particle largeexplode ~ ~ ~ 0.5 0.5 0.5 0.01 1 force
+    /execute @e[type=Arrow,tag=ExplodeArrow] ~ ~ ~ summon Creeper ~ ~ ~ {NoAI:true,Fuse:0,ActiveEffects:[{Id:14,Amplifier:0,Duration:10,ShowParticles:0b}]}
+    /scoreboard players tag @e[type=Arrow,tag=ExplodeArrow] remove ExplosiveArrow
+    /kill @e[type=Arrow,tag=ExplodeArrow]
