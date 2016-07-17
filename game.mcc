@@ -54,7 +54,7 @@
 			/effect @a[m=adventure,score_effects_min=0,score_effects=3] minecraft:jump_boost 1 254 true
 
 			-- 0: Default: Slow falling effect - buggy, move on to #1 soon
-			/effect @a[m=adventure,score_effects_min=0,score_effects=0] minecraft:levitation 1 245 true
+			/effect @a[m=adventure,score_effects_min=0,score_effects=0] minecraft:levitation 1 1 true
 			--# /execute @a[m=adventure,score_effects_min=0,score_effects=0] ~ ~ ~ say Applying buggy falling effect
 			
 			-- 1: For "slow falling", use a matrix of AECs to apply -11 levitation for 5 minutes (600 ticks).
