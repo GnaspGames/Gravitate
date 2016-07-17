@@ -81,3 +81,9 @@ Text3: "{\"text\":\"=========\",\"color\":\"gold\"}"
 ```
 
 
+**Vent AECs**
+
+/summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["largeVent"]}
+/summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["smallVent"]}
+
+
