@@ -1,0 +1,20 @@
+
+
+# DETECT PLAYER COUNT
+{"type":"repeating", "auto":true, "conditional":false}
+/scoreboard players set @e[name=SYSTEM] testforOutput -1
+	{"type":"chain"}
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	/testfor @a[m=adventure]
+	-- Above works assuming testfor block will be 1 in x direction of stats block.
+	{"executeAs":"@e[name=SYSTEM,tag=!SingleplayerMode,score_testforOutput=1,score_testforOutput_min=1]"}
+		/say Switching to Singleplayer Mode
+		/scoreboard players tag @e[name=SYSTEM] remove MultiplayerMode
+        /scoreboard players tag @e[name=SYSTEM] add SingleplayerMode
+	{"executeAs":""}
+	{"executeAs":"@e[name=SYSTEM,tag=!MultiplayerMode,score_testforOutput_min=2]"}
+		/say Switching to Multiplayer Mode
+        /scoreboard players tag @e[name=SYSTEM] remove SingleplayerMode
+		/scoreboard players tag @e[name=SYSTEM] add MultiplayerMode
+	{"executeAs":""}
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
