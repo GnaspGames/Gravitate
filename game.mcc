@@ -48,6 +48,14 @@
 # START NEW GAME
 !event StartNewGame
 	{"type":"chain", "auto":true, "conditional":false}
+	-- Start things running
+	!start_event StartTimer
+	!start_loop DeathHandling
+	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
+		!start_event StartMultiplayer
+	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
+		!start_event StartSingleplayer
+	{"executeAs":""}
 	-- Reset player gamemode, includes those spectating
 	/gamemode adventure @a[m=!creative]
 	-- Set lives and mark players "ingame" 0 to spawn them
@@ -60,10 +68,25 @@
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
 	-- Blank SETTINGS wall
 	/clone -26 2 -74 -23 3 -73 -26 5 -64
-	-- Start the timer
-	!start_event StartTimer
 	-- Play music
 	/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+
+# START MULTIPLAYER
+!event StartMultiplayer
+{"type":"chain", "auto":true, "conditional":false}
+	!stop_loop SingleplayerFinish
+	!start_loop MultiplayerWinnerDetect
+
+
+# START SINGLEPLAYER
+!event StartSingleplayer
+{"type":"chain", "auto":true, "conditional":false}
+	-- TEST: Create some test mobs
+	!stop_loop MultiplayerWinnerDetect
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	!start_loop SingleplayerFinish
 
 # SPAWN PLAYERS
 {"type":"repeating", "auto":true, "conditional":false}	
@@ -80,9 +103,9 @@
 {"executeAs":""}
 	
 # DEATH HANDLING
-{"type":"repeating", "auto":true}
+!loop DeathHandling
+{"type":"chain", "auto":true, "conditional": false}
 /scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
-	{"type":"chain"}
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
 	-- Handle player death
@@ -93,8 +116,9 @@
 		/scoreboard players set @p killed 0
 	{"executeAs":""}
 	-- Announce if the player is out and reset scoreboards
-	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
+	{"executeAs":"@e[tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
 		/tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]
+	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
 		/scoreboard players reset @p ingame
 		/scoreboard players reset @p lives
 	{"executeAs":""}
@@ -112,10 +136,10 @@
 	{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
 
-# END DETECT
-{"type":"repeating", "auto":true, "conditional":false}
-/scoreboard players set @e[name=SYSTEM] testforOutput -1
-	{"type":"chain"}
+# MULTIPLAYER WINNER DETECT
+!loop MultiplayerWinnerDetect
+{"type":"chain", "auto":true, "conditional":false}
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
@@ -123,14 +147,48 @@
 		!start_event EndGame
 	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+
+# SINGLEPLAYER FINISH
+!loop SingleplayerFinish
+{"type":"chain", "auto":true, "conditional":false}
+	-- TODO: Decide on what the "finish" condition is for single player.
+	-- TEST: Check for no more mobs
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	/testfor @e[tag=Mob]
+	-- Above works assuming testfor block will be 1 in x direction of stats block.
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
+		!start_event EndGame
+	{"executeAs":""}
+
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	/testfor @e[m=adventure,score_ingame=0,score_lives=0]
+	-- Above works assuming testfor block will be 1 in x direction of stats block.
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
+		!start_event EndGame
+	{"executeAs":""}
+
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+
 	
 # END GAME
 !event EndGame
 	{"type":"chain", "auto":true, "conditional":false}
-	-- Announce winner
-	{"executeAs":"@a[m=adventure,score_lives_min=1,c=1]"}
+	-- Stop events
+	!start_event StopTimer
+	!stop_loop DeathHandling
+	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
+		!start_event EndMultiplayer
+	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
+		!start_event EndSingleplayer
+	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_lives_min=1,c=1]"}
+		-- Announce winner (TODO: only do this in MutliplayerMode)
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode] ~ ~ ~ @a[m=adventure,score_ingame=0,c=1]"}
+		/tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
+		/title @p title ["",,{"text":"You win!","color":"green","bold":"true"}]
 	{"executeAs":""}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
@@ -153,8 +211,19 @@
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
 	-- Clone SETTINGS wall
 	/clone -26 2 -70 -23 3 -69 -26 5 -64
-	-- Stop the timer
-	!start_event StopTimer
+
+# END MULTIPLAYER
+!event EndMultiplayer
+{"type":"chain", "auto":true, "conditional":false}
+	-- Stop stuff running
+	!stop_loop MultiplayerWinnerDetect
+
+# END SINGLEPLAYER
+!event EndSingleplayer
+{"type":"chain", "auto":true, "conditional":false}
+	-- Stop stuff running
+	!stop_loop SingleplayerFinish
+
 
 
 
