@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "particle": "custom/logo",
+        "logo": "custom/logo"
+    },
+    "elements": [ 
+    {
+        "from": [ -8, 0, 7.5 ],
+        "to": [ 24, 16, 8.5 ],
+        "faces": {
+            "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#logo" }
+        }
+    }
+    ]
+}
