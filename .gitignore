@@ -1,1 +1,3 @@
 *.oc
+gameDir/logs/         
+gameDir/saves/
