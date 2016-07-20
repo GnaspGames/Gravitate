@@ -1,3 +1,5 @@
 *.oc
-gameDir/logs/         
+gameDir/logs/  
 gameDir/saves/
+gameDir/screenshots/
+gameDir/usercache.json
