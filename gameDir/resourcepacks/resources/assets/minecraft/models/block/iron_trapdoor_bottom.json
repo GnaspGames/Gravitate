@@ -2,5 +2,12 @@
     "parent": "block/trapdoor_bottom",
     "textures": {
         "texture": "custom/fan"
+    },
+    "display": {
+        "head": {
+            "rotation": [0, 0, 0],
+            "translation": [0, 4, 0],
+            "scale": [4, 4, 4]
+        }
     }
 }
