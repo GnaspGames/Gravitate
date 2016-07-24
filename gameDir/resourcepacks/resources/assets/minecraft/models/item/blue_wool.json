@@ -1,0 +1,22 @@
+{
+"textures": {
+    "particle": "#texture",
+    "ventfan": "custom/ventfan"
+},
+"elements": [ 
+{
+    "from": [ -8, 0.9375, -8 ],
+    "to": [ 24, 1, 24 ],
+    "faces": {
+        "up":    { "uv": [ 16, 16, 0, 0 ], "texture": "#ventfan" }
+    }
+}
+],
+"display": {
+    "head": {
+        "rotation": [ 0, 0, 0 ],
+        "translation": [ 0, 24, 0 ],
+        "scale": [ 4, 4, 4 ]
+    }
+}
+}

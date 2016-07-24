@@ -87,9 +87,27 @@ Text3: "{\"text\":\"=========\",\"color\":\"gold\"}"
 /summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["smallVent"]}
 /summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["miniVent"]}
 
+/execute @e[name=shulkerPoint] ~ ~ ~ summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["shulkerPoint"]}
+
+/kill @e[type=ArmorStand,name=shulkerPoint]
+
 
 **Panorama**
 
 Go to: /tp 55.5 40 -93.5  0 0
 Set FOV to 82
+
+
+**Ventfan Model ArmorStand**
+
+Put in a cmd block at the 
+
+Blue wool - large vent fan
+/summon ArmorStand ~-0.5 ~-2.5 ~-0.5 {Tags:["ventFanModel"],Invisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,ArmorItems:[{},{},{},{id:"minecraft:wool",Count:1b,Damage:11}],HandItems:[{},{}],DisabledSlots:0}
+
+Purple wool - medium vent fan
+/summon ArmorStand ~-0.5 ~-3 ~-0.5 {Tags:["ventFanModel"],Invisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,ArmorItems:[{},{},{},{id:"minecraft:wool",Count:1b,Damage:10}],HandItems:[{},{}],DisabledSlots:0}
+
+Cyan wool - small vent fan
+/summon ArmorStand ~ ~-3 ~ {Tags:["ventFanModel"],Invisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,ArmorItems:[{},{},{},{id:"minecraft:wool",Count:1b,Damage:9}],HandItems:[{},{}],DisabledSlots:0}
 

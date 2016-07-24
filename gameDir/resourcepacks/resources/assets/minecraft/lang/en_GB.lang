@@ -24,7 +24,7 @@ translation.test.args=%s %s
 translation.test.world=world
 
 menu.game=Game menu
-menu.singleplayer=Play Gravitate
+menu.singleplayer=Singleplayer
 menu.multiplayer=Multiplayer
 menu.online=Minecraft Realms
 menu.options=Options...

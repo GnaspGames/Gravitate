@@ -22,7 +22,7 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
+		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
 		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
@@ -65,8 +65,8 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	{"executeAs":"@e[score_timer=480,score_timer_min=480,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
+		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
+		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
 		/tellraw @a [{"text":"Watch out! No need to shulk about it.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
@@ -78,8 +78,8 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	{"executeAs":"@e[score_timer=600,score_timer_min=600,tag=!eventActive]"}
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/execute @e[name=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
+		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
+		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
 		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
