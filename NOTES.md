@@ -86,3 +86,10 @@ Text3: "{\"text\":\"=========\",\"color\":\"gold\"}"
 /summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["largeVent"]}
 /summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["smallVent"]}
 /summon AreaEffectCloud ~ ~ ~ {Duration:2147483647,Tags:["miniVent"]}
+
+
+**Panorama**
+
+Go to: /tp 55.5 40 -93.5  0 0
+Set FOV to 82
+

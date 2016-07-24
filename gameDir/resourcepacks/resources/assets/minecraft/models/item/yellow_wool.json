@@ -1,0 +1,22 @@
+{
+"textures": {
+    "particle": "custom/logo",
+    "logo": "custom/logo"
+},
+"elements": [ 
+{
+    "from": [ -8, -8, 7.5 ],
+    "to": [ 24.5, 24, 8.5 ],
+    "faces": {
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#logo" }
+    }
+}
+],
+"display": {
+    "head": {
+        "rotation": [ 0, 0, 0 ],
+        "translation": [ 0, 0, -4 ],
+        "scale": [ 4, 4, 4 ]
+    }
+}
+}
