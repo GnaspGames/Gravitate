@@ -1,6 +1,6 @@
 {
 "textures": {
-    "particle": "#texture",
+    "particle": "custom/ventfan",
     "ventfan": "custom/ventfan"
 },
 "elements": [ 
