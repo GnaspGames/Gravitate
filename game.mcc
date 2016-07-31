@@ -193,8 +193,8 @@
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"executeAs":""}
-	-- Move everyone back to the lobby
-	/gamemode adventure @a[m=spectator]
+	-- Move everyone back to the lobby, including lobby spectators
+	/gamemode adventure @a[m=spectator,tag=spectating]
 	/clear @a[m=adventure]
 	/effect @a[m=adventure] minecraft:saturation 1 100 true
 	/effect @a[m=adventure] minecraft:instant_health 1 100 true
