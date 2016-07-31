@@ -164,6 +164,8 @@
 	/testfor @e[tag=Mob]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
 	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
+		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ title @p title ["",{"text":"You win!","color":"green","bold":"true"}]
 		!start_event EndGame
 	{"executeAs":""}
 
@@ -190,9 +192,6 @@
 		-- Announce winner (TODO: only do this in MutliplayerMode)
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
-	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode] ~ ~ ~ @a[m=adventure,score_ingame=0,c=1]"}
-		/tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
-		/title @p title ["",{"text":"You win!","color":"green","bold":"true"}]
 	{"executeAs":""}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
