@@ -58,7 +58,7 @@
 		!start_event StartSingleplayer
 	{"executeAs":""}
 	-- Reset player gamemode, includes those spectating
-	/gamemode adventure @a[m=!creative]
+	-- /gamemode adventure @a[m=!creative]
 	-- Set lives and mark players "ingame" 0 to spawn them
 	/scoreboard objectives setdisplay sidebar lives
 	/scoreboard players set @a[m=adventure] lives 0
