@@ -164,12 +164,12 @@
 		!start_event EndGame
 	{"executeAs":""}
 
-	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
-	/testfor @e[m=adventure,score_ingame=0,score_lives=0]
+	--/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	--/testfor @e[m=adventure,score_ingame=0,score_lives=0]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
-		!start_event EndGame
-	{"executeAs":""}
+	--{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
+	--	!start_event EndGame
+	--{"executeAs":""}
 
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
