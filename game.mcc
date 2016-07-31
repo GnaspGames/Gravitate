@@ -193,7 +193,7 @@
 		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode] ~ ~ ~ @a[m=adventure,score_ingame=0,c=1]"}
 		/tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
-		/title @p title ["",,{"text":"You win!","color":"green","bold":"true"}]
+		/title @p title ["",{"text":"You win!","color":"green","bold":"true"}]
 	{"executeAs":""}
 	-- Move everyone back to the lobby
 	/gamemode adventure @a[m=spectator]
