@@ -106,15 +106,19 @@
 		
 #
 # RUN RESET
-{"type":"impulse","auto":false,"conditional":false}
+{"type":"impulse","auto":false}
 /summon ArmorStand ~ ~ ~ {CustomName:RESET}
 
 #
 # DEBUG ON
-{"type":"impulse","auto":false,"conditional":false}
+{"type":"impulse","auto":false}
 /scoreboard players tag @e[name=SYSTEM] add debugOn
+	{"type":"chain", "auto":true}
+	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say DEBUG MODE ON
 
 #
 # DEBUG OFF
-{"type":"impulse","auto":false,"conditional":false}
+{"type":"impulse","auto":false}
 /scoreboard players tag @e[name=SYSTEM] remove debugOn
+	{"type":"chain", "auto":true}
+	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say DEBUG MODE OFF
