@@ -1,10 +1,10 @@
 
 
  --- In Game ---
- 0 = Spawn into the game
- 1 = Yes playing
- 2 = Failed to stay up, kill him
- 3 = Died, loose a life, then...
+ -- 0 = Spawn into the game
+ -- 1 = Yes playing
+ -- 2 = Failed to stay up, kill him
+ -- 3 = Died, loose a life, then...
      If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
 	 
 # TRIGGER NEW GAME
