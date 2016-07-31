@@ -151,8 +151,12 @@
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,score_lives_min=1]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1]"}
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
+		-- Announce winner
+		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		!start_event EndGame
+		/scoreboard players tag @e[name=SYSTEM] remove GameActive
 	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
@@ -197,11 +201,6 @@
 	!stop_loop DeathHandling
 	!stop_loop MultiplayerFinish
 	!stop_loop SingleplayerFinish
-	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_lives_min=1,c=1]"}
-		-- Announce winner (TODO: only do this in MutliplayerMode)
-		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
-		/title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
-	{"executeAs":""}
 	-- Move everyone back to the lobby, including lobby spectators
 	/gamemode adventure @a[m=spectator,tag=spectating]
 	/clear @a[m=adventure]
