@@ -83,6 +83,7 @@
 {"type":"chain", "auto":true, "conditional":false}
 	-- TEST: Create some test mobs
 	!stop_loop MultiplayerWinnerDetect
+	!debugMessage StartSingleplayer event called
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
@@ -153,8 +154,9 @@
 {"type":"chain", "auto":true, "conditional":false}
 	-- TODO: Decide on what the "finish" condition is for single player.
 	-- TEST: Check for no more mobs
-	/scoreboard players set @e[name=SYSTEM] testforOutput -1
+	!debugMessage SingleplayerFinish event called
 
+	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @e[tag=Mob]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
@@ -176,8 +178,11 @@
 !event EndGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Stop events
+	!debugMessage EndGame event called
 	!start_event StopTimer
 	!stop_loop DeathHandling
+	!stop_loop MultiplayerWinnerDetect
+	!stop_loop SingleplayerFinish
 	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
 		!start_event EndMultiplayer
 	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
@@ -211,19 +216,6 @@
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
 	-- Clone SETTINGS wall
 	/clone -26 2 -70 -23 3 -69 -26 5 -64
-
-# END MULTIPLAYER
-!event EndMultiplayer
-{"type":"chain", "auto":true, "conditional":false}
-	-- Stop stuff running
-	!stop_loop MultiplayerWinnerDetect
-
-# END SINGLEPLAYER
-!event EndSingleplayer
-{"type":"chain", "auto":true, "conditional":false}
-	-- Stop stuff running
-	!stop_loop SingleplayerFinish
-
 
 
 
