@@ -111,3 +111,25 @@ Purple wool - medium vent fan
 Cyan wool - small vent fan
 /summon ArmorStand ~ ~-3 ~ {Tags:["ventFanModel"],Invisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,ArmorItems:[{},{},{},{id:"minecraft:wool",Count:1b,Damage:9}],HandItems:[{},{}],DisabledSlots:0}
 
+
+
+
+Music
+-----
+
+
+Clash Defiant Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+Black Vortex Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+
+DEBUGGING
+---------
+
+turn on: 
+/scoreboard players tag @e[name=SYSTEM] add debugOn
+/scoreboard players tag @e[name=SYSTEM] remove debugOn
