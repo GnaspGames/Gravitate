@@ -98,3 +98,15 @@
 		/kill @e[type=Blaze]
 		/scoreboard players tag @e[r=0] remove eventActive
 	{"executeAs":""}
+
+
+
+# STOP
+!event StopMobEvents
+{"type":"chain"}
+	--- Kill all mobs from mob events
+	/kill @e[type=Shulker]
+	/kill @e[type=Ghast]
+	/kill @e[type=Blaze]
+	--- remove eventActive tag
+	/scoreboard players tag @e[tag=eventActive] remove eventActive
