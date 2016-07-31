@@ -5,7 +5,7 @@
  -- 1 = Yes playing
  -- 2 = Failed to stay up, kill him
  -- 3 = Died, loose a life, then...
-     If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
+ --- If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
 	 
 # TRIGGER NEW GAME
 {"type":"repeating", "auto":true, "conditional":false}
@@ -184,9 +184,9 @@
 	-- Stop events
 	!debugMessage EndGame event called
 	!start_event StopTimer
+	!start_event StopMobEvents
 	!stop_loop DeathHandling
 	!stop_loop MultiplayerFinish
-
 	!stop_loop SingleplayerFinish
 	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_lives_min=1,c=1]"}
 		-- Announce winner (TODO: only do this in MutliplayerMode)
@@ -204,10 +204,7 @@
 	/scoreboard objectives setdisplay sidebar
 	--- Stop the music
 	/stopsound @a[m=adventure]
-	--- Kill all mobs
-	/kill @e[type=Shulker]
-	/kill @e[type=Ghast]
-	/kill @e[type=Blaze]
+	
 	--- Kill any left over Fireballs
 	/kill @e[type=Fireball]
 	-- Clone START GAME wall
