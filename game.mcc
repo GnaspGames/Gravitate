@@ -76,14 +76,15 @@
 !event StartMultiplayer
 {"type":"chain", "auto":true, "conditional":false}
 	!stop_loop SingleplayerFinish
-	!start_loop MultiplayerWinnerDetect
+	!start_loop MultiplayerFinish
+
 
 
 # START SINGLEPLAYER
 !event StartSingleplayer
 {"type":"chain", "auto":true, "conditional":false}
 	-- TEST: Create some test mobs
-	!stop_loop MultiplayerWinnerDetect
+	!stop_loop MultiplayerFinish
 	!debugMessage StartSingleplayer event called
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
@@ -132,14 +133,15 @@
 	{"executeAs" : "@a[score_trigger_spectate_min=1]"}
 		-- Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
 		/gamemode spectator @p
+		/scoreboard players tag @p add spectating
 		{"type":"chain"}
 		/tp @p @r[type=ArmorStand,name=startingPoint]
 		/scoreboard players set @p trigger_spectate 0
 	{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
 
-# MULTIPLAYER WINNER DETECT
-!loop MultiplayerWinnerDetect
+# MULTIPLAYER FINISH CONDITION
+!loop MultiplayerFinish
 {"type":"chain", "auto":true, "conditional":false}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
@@ -150,7 +152,7 @@
 	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
-# SINGLEPLAYER FINISH
+# SINGLEPLAYER FINISH CONDITIONS
 !loop SingleplayerFinish
 {"type":"chain", "auto":true, "conditional":false}
 	-- TODO: Decide on what the "finish" condition is for single player.
@@ -171,7 +173,6 @@
 	--{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0]"}
 	--	!start_event EndGame
 	--{"executeAs":""}
-
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
 	
@@ -182,12 +183,9 @@
 	!debugMessage EndGame event called
 	!start_event StopTimer
 	!stop_loop DeathHandling
-	!stop_loop MultiplayerWinnerDetect
+	!stop_loop MultiplayerFinish
+
 	!stop_loop SingleplayerFinish
-	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
-		!start_event EndMultiplayer
-	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
-		!start_event EndSingleplayer
 	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_lives_min=1,c=1]"}
 		-- Announce winner (TODO: only do this in MutliplayerMode)
 		/tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
