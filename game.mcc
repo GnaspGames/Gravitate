@@ -13,6 +13,7 @@
 		-- Call the StartCountdown event, and set trigger_start to 0
 		!start_event StartCountdown
 		{"type":"chain"}
+		/gamemode adventure @p
 		/scoreboard players set @p trigger_start 0
 	{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
