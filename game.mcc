@@ -72,7 +72,7 @@
 	-- Blank SETTINGS wall
 	/clone -26 2 -74 -23 3 -73 -26 5 -64
 	-- Play music
-	/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+	/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.one master @a[m=adventure] ~ ~ ~ 100 1 1
 	-- Set GameActive tag
 	/scoreboard players tag @e[name=SYSTEM] add GameActive
 

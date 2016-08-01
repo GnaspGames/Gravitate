@@ -1,0 +1,18 @@
+{
+	"custom.music.one": {
+		"sounds": [
+			{
+				"name": "custom/music/one",
+				"stream": true
+			}
+		]
+	},
+	"custom.music.two": {
+		"sounds": [
+			{
+				"name": "custom/music/two",
+				"stream": true
+			}
+		]
+	}
+}

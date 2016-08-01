@@ -15,7 +15,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.two master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=90,score_timer_min=90,tag=eventActive]"}
 		/kill @e[type=Blaze]
@@ -27,7 +27,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.one master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=180,score_timer_min=180,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -41,7 +41,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.two master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=270,score_timer_min=270,tag=eventActive]"}
 		/kill @e[type=Ghast]
@@ -58,7 +58,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.one master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=390,score_timer_min=390,tag=eventActive]"}
 		/kill @e[type=Blaze]
@@ -71,7 +71,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.mall master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.two master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=540,score_timer_min=540,tag=eventActive]"}
 		/kill @e[type=Shulker]
@@ -90,7 +90,7 @@
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
-		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:record.far master @a[m=adventure] ~ ~ ~ 100 1 1
+		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.one master @a[m=adventure] ~ ~ ~ 100 1 1
 		/scoreboard players tag @e[r=0] add eventActive
 	{"executeAs":"@e[score_timer=660,score_timer_min=660,tag=eventActive]"}	
 		/kill @e[type=Shulker]
