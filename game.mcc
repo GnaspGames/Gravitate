@@ -206,6 +206,7 @@
 	!stop_loop SingleplayerFinish
 	-- Move everyone back to the lobby, including lobby spectators
 	/gamemode adventure @a[m=spectator,tag=spectating]
+	/scoreboard players tag @a[tag=spectating] remove spectating
 	/clear @a[m=adventure]
 	/effect @a[m=adventure] minecraft:saturation 1 100 true
 	/effect @a[m=adventure] minecraft:instant_health 1 100 true
