@@ -49,6 +49,7 @@
 # START NEW GAME
 !event StartNewGame
 	{"type":"chain", "auto":true, "conditional":false}
+	!debugMessage StartNewGame event called
 	-- Start things running
 	!start_event StartTimer
 	!start_loop DeathHandling
@@ -65,6 +66,7 @@
 	/scoreboard players operation @a[m=adventure] lives = $lives vars
 	/scoreboard players set @a[m=adventure] killed 0
 	/scoreboard players set @a[m=adventure] ingame 0
+	!debugMessage lives set
 	-- Clone SPECTATE wall
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
 	-- Blank SETTINGS wall
@@ -87,7 +89,7 @@
 {"type":"chain", "auto":true, "conditional":false}
 	-- TEST: Create some test mobs
 	!stop_loop MultiplayerFinish
-	!debugMessage StartSingleplayer event called
+	--!debugMessage StartSingleplayer event called
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
@@ -110,6 +112,7 @@
 # DEATH HANDLING
 !loop DeathHandling
 {"type":"chain", "auto":true, "conditional": false}
+!debugMessage DeathHandling running!
 /scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
@@ -121,10 +124,10 @@
 		/scoreboard players set @p killed 0
 	{"executeAs":""}
 	-- Announce if the player is out and reset scoreboards
-	{"executeAs":"@e[tag=MultiplayerMode] ~ ~ ~ @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
-		/tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]	
-	{"executeAs":"@e[tag=SingleplayerMode] ~ ~ ~ @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
-		/scoreboard players tag @p add GameOver
+	{"executeAs":"@e[tag=MultiplayerMode]"}
+		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]	
+	{"executeAs":"@e[tag=SingleplayerMode]"}
+		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ scoreboard players tag @p add GameOver
 	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
 		/scoreboard players reset @p ingame
 		/scoreboard players reset @p lives
@@ -165,7 +168,7 @@
 {"type":"chain", "auto":true, "conditional":false}
 	-- TODO: Decide on what the "finish" condition is for single player.
 	-- TEST: Check for no more mobs
-	!debugMessage SingleplayerFinish event called
+	--!debugMessage SingleplayerFinish event called
 
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
@@ -178,16 +181,16 @@
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
 	{"executeAs":""}
 
-	--/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
-	--/testfor @a[m=adventure,tag=GameOver]
+	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
+	/testfor @a[m=adventure,tag=GameOver]
 	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	--{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0,tag=GameActive]"}
-	--	/execute @a[m=adventure,tag=GameOver] ~ ~ ~ tellraw @p ["",{"text":"Game over!","color":"red","bold":"true"}]
-	--	/execute @a[m=adventure,tag=GameOver] ~ ~ ~ title @p title ["",{"text":"Game over!","color":"red","bold":"true"}]
-	--	/execute @a[m=adventure,tag=GameOver] ~ ~ ~ scoreboard player tag @p remove GameOver
-	--	!start_event EndGame
-	--	/scoreboard players tag @e[name=SYSTEM] remove GameActive
-	--{"executeAs":""}
+	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
+		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ tellraw @p ["",{"text":"Game over!","color":"red","bold":"true"}]
+		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ title @p title ["",{"text":"Game over!","color":"red","bold":"true"}]
+		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ scoreboard players tag @p remove GameOver
+		!start_event EndGame
+		/scoreboard players tag @e[name=SYSTEM] remove GameActive
+	{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
 	
@@ -195,7 +198,7 @@
 !event EndGame
 	{"type":"chain", "auto":true, "conditional":false}
 	-- Stop events
-	!debugMessage EndGame event called
+	--!debugMessage EndGame event called
 	!start_event StopTimer
 	!start_event StopMobEvents
 	!stop_loop DeathHandling
