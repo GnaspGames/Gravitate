@@ -1,107 +1,111 @@
+/*
+	GAME
+	=========
+	Handles the main game logic
+*/
 
+/* 
+	KEY: ingame
+	0 = Spawn into the game
+	1 = Yes playing
+	2 = Failed to stay up, kill him
+	3 = Died, loose a life, then...
+		If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
+*/
 
- --- In Game ---
- -- 0 = Spawn into the game
- -- 1 = Yes playing
- -- 2 = Failed to stay up, kill him
- -- 3 = Died, loose a life, then...
- --- If "lives" greater than 0 reenter game, otherwise leave them out and announce it.
-	 
 # TRIGGER NEW GAME
-{"type":"repeating", "auto":true, "conditional":false}
-	{"executeAs" : "@a[score_trigger_start_min=1]"}
-		-- Call the StartCountdown event, and set trigger_start to 0
+>{"type":"repeating", "auto":true, "conditional":false}
+	>{"executeAs" : "@a[score_trigger_start_min=1]"}
+		// Call the StartCountdown event, and set trigger_start to 0
 		!start_event StartCountdown
-		{"type":"chain"}
+	>{"type":"chain"}
 		/gamemode adventure @p
 		/scoreboard players set @p trigger_start 0
-	{"executeAs" : ""}
+	>{"executeAs" : ""}
 	/scoreboard players enable @a trigger_start
 	
 # START COUNTDOWN
 !event StartCountdown
-	{"type":"chain", "auto":true, "conditional":false}
+	>{"type":"chain", "auto":true, "conditional":false}
 	/title @a times 0 40 20
 	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 60
 	!start_loop Countdown
 		
 # COUNTDOWN
 !loop Countdown
-	{"type":"chain", "auto":true, "conditional":false}		
-	{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
+	>{"type":"chain", "auto":true, "conditional":false}		
+	>{"executeAs":"@e[name=SYSTEM,score_countdown=60,score_countdown_min=60]"}
 		/title @a reset
 		/title @a title {"text":"3","color":"white","bold":"true"}
 		
-	{"executeAs":"@e[name=SYSTEM,score_countdown=40,score_countdown_min=40]"}
+	>{"executeAs":"@e[name=SYSTEM,score_countdown=40,score_countdown_min=40]"}
 		/title @a title {"text":"2","color":"white","bold":"true"}
 		
-	{"executeAs":"@e[name=SYSTEM,score_countdown=20,score_countdown_min=20]"}
+	>{"executeAs":"@e[name=SYSTEM,score_countdown=20,score_countdown_min=20]"}
 		/title @a title {"text":"1","color":"white","bold":"true"}
 		
-	{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
+	>{"executeAs":"@e[name=SYSTEM,score_countdown=0,score_countdown_min=0]"}
 		/title @a title {"text":"Go!","color":"green","bold":"true"}
 		!stop_loop Countdown
-			{"conditional":true}
+		>{"conditional":true}
 				!start_event StartNewGame
-	{"executeAs":"", "conditional":false}
+	>{"executeAs":"", "conditional":false}
 	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
 	
 # START NEW GAME
 !event StartNewGame
-	{"type":"chain", "auto":true, "conditional":false}
+	>{"type":"chain", "auto":true, "conditional":false}
 	!debugMessage StartNewGame event called
-	-- Start things running
+	// Start things running
 	!start_event StartTimer
 	!start_loop DeathHandling
-	{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
+	>{"executeAs":"@e[name=SYSTEM,tag=MultiplayerMode]"}
 		!start_event StartMultiplayer
-	{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
+	>{"executeAs":"@e[name=SYSTEM,tag=SingleplayerMode]"}
 		!start_event StartSingleplayer
-	{"executeAs":""}
-	-- Reset player gamemode, includes those spectating
-	-- /gamemode adventure @a[m=!creative]
-	-- Set lives and mark players "ingame" 0 to spawn them
+	>{"executeAs":""}
+	// Reset player gamemode, includes those spectating
+	// /gamemode adventure @a[m=!creative]
+	// Set lives and mark players "ingame" 0 to spawn them
 	/scoreboard objectives setdisplay sidebar lives
 	/scoreboard players set @a[m=adventure] lives 0
 	/scoreboard players operation @a[m=adventure] lives = $lives vars
 	/scoreboard players set @a[m=adventure] killed 0
 	/scoreboard players set @a[m=adventure] ingame 0
-	-- Make sure full life at start 
+	// Make sure full life at start 
 	/effect @a[m=adventure] minecraft:saturation 1 100 true
 	/effect @a[m=adventure] minecraft:instant_health 1 100 true
-	-- Clone SPECTATE wall
+	// Clone SPECTATE wall
 	/clone -26 2 -40 -23 3 -39 -26 5 -50
-	-- Blank SETTINGS wall
+	// Blank SETTINGS wall
 	/clone -26 2 -74 -23 3 -73 -26 5 -64
-	-- Play music
+	// Play music
 	/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:custom.music.one master @a[m=adventure] ~ ~ ~ 100 1 1
-	-- Set GameActive tag
+	// Set GameActive tag
 	/scoreboard players tag @e[name=SYSTEM] add GameActive
 
 # START MULTIPLAYER
 !event StartMultiplayer
-{"type":"chain", "auto":true, "conditional":false}
+	>{"type":"chain", "auto":true, "conditional":false}
 	!stop_loop SingleplayerFinish
 	!start_loop MultiplayerFinish
 
-
-
 # START SINGLEPLAYER
 !event StartSingleplayer
-{"type":"chain", "auto":true, "conditional":false}
-	-- TEST: Create some test mobs
+	>{"type":"chain", "auto":true, "conditional":false}
+	// TEST: Create some test mobs
 	!stop_loop MultiplayerFinish
-	--!debugMessage StartSingleplayer event called
+	//!debugMessage StartSingleplayer event called
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	!start_loop SingleplayerFinish
 
 # SPAWN PLAYERS
-{"type":"repeating", "auto":true, "conditional":false}	
-{"executeAs":"@a[m=adventure,score_ingame_min=0,score_ingame=0]"}
+>{"type":"repeating", "auto":true, "conditional":false}	
+>{"executeAs":"@a[m=adventure,score_ingame_min=0,score_ingame=0]"}
 	/clear @p 
-	{"type":"chain"}
+	>{"type":"chain"}
 	/give @p minecraft:stone_sword
 	/give @p minecraft:bow
 	/give @p minecraft:arrow 64
@@ -109,104 +113,104 @@
 	/give @p tipped_arrow 16 0 {Potion:"minecraft:fire_resistance",display:{Name:Explosive Arrow}}
 	/tp @p @r[type=ArmorStand,name=startingPoint]
 	/scoreboard players set @p ingame 1
-{"executeAs":""}
+>{"executeAs":""}
 	
 # DEATH HANDLING
 !loop DeathHandling
-{"type":"chain", "auto":true, "conditional": false}
+>{"type":"chain", "auto":true, "conditional": false}
 !debugMessage DeathHandling running!
 /scoreboard players set @a[m=adventure,score_ingame_min=1,score_ingame=1] ingame 2 {OnGround:true}
 	/execute @a[m=adventure,score_ingame_min=1,score_ingame=1] ~ ~ ~ detect ~ ~-0.5 ~ minecraft:lava 0 scoreboard players set @p ingame 2
 	/kill @a[m=adventure,score_ingame_min=2,score_ingame=2,score_killed=0]
-	-- Handle player death
-	{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
+	// Handle player death
+	>{"executeAs":"@a[m=adventure,score_killed_min=1,score_timeSinceDeath_min=1]"}
 		/scoreboard players set @p ingame 3
 		/scoreboard players remove @p lives 1
 		/scoreboard players set @p damage 0
 		/scoreboard players set @p killed 0
-	{"executeAs":""}
-	-- Announce if the player is out and reset scoreboards
-	{"executeAs":"@e[tag=MultiplayerMode]"}
+	>{"executeAs":""}
+	// Announce if the player is out and reset scoreboards
+	>{"executeAs":"@e[tag=MultiplayerMode]"}
 		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]	
-	{"executeAs":"@e[tag=SingleplayerMode]"}
+	>{"executeAs":"@e[tag=SingleplayerMode]"}
 		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ scoreboard players tag @p add GameOver
-	{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
+	>{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
 		/scoreboard players reset @p ingame
 		/scoreboard players reset @p lives
-	{"executeAs":""}
-	-- Respawn if player has lives
+	>{"executeAs":""}
+	// Respawn if player has lives
 	/scoreboard players set @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives_min=1] ingame 0
 	
 # SPECTATE
-{"type":"repeating", "auto":true, "conditional":false}
-	{"executeAs" : "@a[score_trigger_spectate_min=1]"}
-		-- Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
+>{"type":"repeating", "auto":true, "conditional":false}
+	>{"executeAs" : "@a[score_trigger_spectate_min=1]"}
+		// Set the spectator mode, teleport to random startingPoint and set trigger_spectate to 0
 		/gamemode spectator @p
 		/scoreboard players tag @p add spectating
-		{"type":"chain"}
+		>{"type":"chain"}
 		/tp @p @r[type=ArmorStand,name=startingPoint]
 		/scoreboard players set @p trigger_spectate 0
-	{"executeAs":""}
+	>{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
 
 # MULTIPLAYER FINISH CONDITION
 !loop MultiplayerFinish
-{"type":"chain", "auto":true, "conditional":false}
+>{"type":"chain", "auto":true, "conditional":false}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,score_lives_min=1]
-	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
-		-- Announce winner
+	// Above works assuming testfor block will be 1 in x direction of stats block.
+	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
+		// Announce winner
 		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
-	{"executeAs":""}
+	>{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
 # SINGLEPLAYER FINISH CONDITIONS
 !loop SingleplayerFinish
-{"type":"chain", "auto":true, "conditional":false}
-	-- TODO: Decide on what the "finish" condition is for single player.
-	-- TEST: Check for no more mobs
-	--!debugMessage SingleplayerFinish event called
+>{"type":"chain", "auto":true, "conditional":false}
+	// TODO: Decide on what the "finish" condition is for single player.
+	// TEST: Check for no more mobs
+	//!debugMessage SingleplayerFinish event called
 
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @e[tag=Mob]
-	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0,tag=GameActive]"}
+	// Above works assuming testfor block will be 1 in x direction of stats block.
+	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0,tag=GameActive]"}
 		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
 		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ title @p title ["",{"text":"You win!","color":"green","bold":"true"}]
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
-	{"executeAs":""}
+	>{"executeAs":""}
 
 	/stats block ~1 ~ ~ set SuccessCount @e[name=SYSTEM] testforOutput
 	/testfor @a[m=adventure,tag=GameOver]
-	-- Above works assuming testfor block will be 1 in x direction of stats block.
-	{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
+	// Above works assuming testfor block will be 1 in x direction of stats block.
+	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
 		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ tellraw @p ["",{"text":"Game over!","color":"red","bold":"true"}]
 		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ title @p title ["",{"text":"Game over!","color":"red","bold":"true"}]
 		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ scoreboard players tag @p remove GameOver
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
-	{"executeAs":""}
+	>{"executeAs":""}
 	/scoreboard players set @e[name=SYSTEM] testforOutput -1
 
 	
 # END GAME
 !event EndGame
-	{"type":"chain", "auto":true, "conditional":false}
-	-- Stop events
-	--!debugMessage EndGame event called
+	>{"type":"chain", "auto":true, "conditional":false}
+	// Stop events
+	//!debugMessage EndGame event called
 	!start_event StopTimer
 	!start_event StopMobEvents
 	!stop_loop DeathHandling
 	!stop_loop MultiplayerFinish
 	!stop_loop SingleplayerFinish
-	-- Move everyone back to the lobby, including lobby spectators
+	// Move everyone back to the lobby, including lobby spectators
 	/gamemode adventure @a[m=spectator,tag=spectating]
 	/scoreboard players tag @a[tag=spectating] remove spectating
 	/clear @a[m=adventure]
@@ -216,27 +220,12 @@
 	/scoreboard players reset @a[m=adventure] ingame
 	/scoreboard players reset @a[m=adventure] lives
 	/scoreboard objectives setdisplay sidebar
-	--- Stop the music
+	//- Stop the music
 	/stopsound @a[m=adventure]
 	
-	--- Kill any left over Fireballs
+	//- Kill any left over Fireballs
 	/kill @e[type=Fireball]
-	-- Clone START GAME wall
+	// Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
-	-- Clone SETTINGS wall
+	// Clone SETTINGS wall
 	/clone -26 2 -70 -23 3 -69 -26 5 -64
-
-
-
-
-	
-	
-	
-	
-	
-
-
-	
-
-
-

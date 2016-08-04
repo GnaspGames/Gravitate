@@ -1,44 +1,48 @@
+/*
+	SFX (Special Effects)
+	==========
+	Used to manage build sfx such as particles used to enhance the build.
+*/
+
 # Lava particles
-{"type":"repeating","auto":true}
-    -- leaky pipes
-    /particle lava 18 44 -89 0 0 0 0.1 1
-    {"type":"chain"}
-    /particle lava 18 43 -89 0 0 0 0.1 1
-    /particle lava 18 11 -24 0 0 0 0.1 1
-    /particle lava 18 10 -24 0 0 0 0.1 1
-    /particle lava 93 56 -89 0 0 0 0.1 1
-    /particle lava 93 55 -89 0 0 0 0.1 1
+>{"type":"repeating-chain","auto":true}
 
+	// leaky pipes
+	/particle lava 18 44 -89 0 0 0 0.1 1
+	/particle lava 18 43 -89 0 0 0 0.1 1
+	/particle lava 18 11 -24 0 0 0 0.1 1
+	/particle lava 18 10 -24 0 0 0 0.1 1
+	/particle lava 93 56 -89 0 0 0 0.1 1
+	/particle lava 93 55 -89 0 0 0 0.1 1
 
-    -- lava flow bottoms
-    /particle lava 95 5 -34 1 1 1 0.1 1
-    /particle lava 40 5 -96 1 1 1 0.1 1
-    /particle lava 16 4 -37 1 1 1 0.1 1
+	// lava flow bottoms
+	/particle lava 95 5 -34 1 1 1 0.1 1
+	/particle lava 40 5 -96 1 1 1 0.1 1
+	/particle lava 16 4 -37 1 1 1 0.1 1
 
-    -- lava flow tops
-    /particle lava 97 19 -35 0 0 0 0.1 1
-    /particle lava 40 29 -98 0 0 0 0.1 1
+	// lava flow tops
+	/particle lava 97 19 -35 0 0 0 0.1 1
+	/particle lava 40 29 -98 0 0 0 0.1 1
 
-    -- wall fires
-    /particle lava 79 39 -17 0 0 0 0.1 1
-    /particle lava 95 28 -74 0 0 0 0.1 1
-    /particle lava 95 38 -47 0 0 0 0.1 1
-    /particle lava 32 29 -17 0 0 0 0.1 1
-    /particle lava 15 39 -77 0 0 0 0.1 1
-    /particle lava 80 39 -97 0 0 0 0.1 1
-
+	// wall fires
+	/particle lava 79 39 -17 0 0 0 0.1 1
+	/particle lava 95 28 -74 0 0 0 0.1 1
+	/particle lava 95 38 -47 0 0 0 0.1 1
+	/particle lava 32 29 -17 0 0 0 0.1 1
+	/particle lava 15 39 -77 0 0 0 0.1 1
+	/particle lava 80 39 -97 0 0 0 0.1 1
 
 # Lights
-{"type":"repeating","auto":true}
-    /particle fireworksSpark 56.0 56 -40.0 0 0 0 0.02 1
-    {"type":"chain"}
-    /particle endRod 56.0 56 -40.0 0.2 0.2 0.2 0.02 1
+>{"type":"repeating-chain","auto":true}
 
-    /particle fireworksSpark 40.0 56 -56.0 0 0 0 0.02 1
-    /particle endRod 40.0 56 -56.0 0.2 0.2 0.2 0.02 1
+	/particle fireworksSpark 56.0 56 -40.0 0 0 0 0.02 1
+	/particle endRod 56.0 56 -40.0 0.2 0.2 0.2 0.02 1
 
-    /particle fireworksSpark 56.0 56 -72.0 0 0 0 0.02 1
-    /particle endRod 56.0 56 -72.0 0.2 0.2 0.2 0.02 1
+	/particle fireworksSpark 40.0 56 -56.0 0 0 0 0.02 1
+	/particle endRod 40.0 56 -56.0 0.2 0.2 0.2 0.02 1
 
-    /particle fireworksSpark 72.0 56 -56.0 0 0 0 0.02 1
-    /particle endRod 72.0 56 -56.0 0.2 0.2 0.2 0.02 1
+	/particle fireworksSpark 56.0 56 -72.0 0 0 0 0.02 1
+	/particle endRod 56.0 56 -72.0 0.2 0.2 0.2 0.02 1
+
+	/particle fireworksSpark 72.0 56 -56.0 0 0 0 0.02 1
+	/particle endRod 72.0 56 -56.0 0.2 0.2 0.2 0.02 1

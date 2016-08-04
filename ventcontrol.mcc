@@ -1,78 +1,84 @@
+/*
+	VENT CONTROL
+	==========
+	Used to manage build sfx such as particles used to enhance the build.
+*/
+
 # VENT PARTICLES
-{"type":"repeating", "auto":true}
+>{"type":"repeating", "auto":true}
 /execute @e[name=lobbyvent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200		
-	{"type":"chain"}
+>{"type":"chain"}
 	/execute @e[tag=largeVent] ~ ~ ~ particle bubble ~1.5 ~1 ~1.5 1 10 1 0 200
 	/execute @e[tag=smallVent] ~ ~ ~ particle bubble ~0.5 ~1 ~0.5 0.5 5 0.5 0 200
 	/execute @e[tag=miniVent] ~ ~ ~ particle bubble ~ ~1 ~ 0.2 3 0.2 0 100
 	
-
---- Effects Score ---
-0 = Default: Slow falling effect - buggy, move on to #1
-1 = AEC Slow falling effect
-2 = Rising levitation - above vent entity
-3 = Free falling, no levitation.
+/*	KEY: "effects"
+	0 = Default: Slow falling effect - buggy, move on to #1
+	1 = AEC Slow falling effect
+	2 = Rising levitation - above vent entity
+	3 = Free falling, no levitation.
+*/
 	
 # EFFECTS
-{"type":"repeating", "auto":true}
-	-- Default score of 1
+>{"type":"repeating-chain", "auto":true}
+	
+	// Default score of 1
 	/scoreboard players set @a effects 0
-	{"type":"chain"}
 
-		-- Count ticks on effect = 0
-		/scoreboard players add @a[m=adventure,score_effects_min=0,score_effects=0] effectsTimer 1
+	// Count ticks on effect = 0
+	/scoreboard players add @a[m=adventure,score_effects_min=0,score_effects=0] effectsTimer 1
 
-		-- Move on to 1 after 3 ticks
-		/scoreboard players set @a[m=adventure,score_effectsTimer_min=4] effects 1
+	// Move on to 1 after 3 ticks
+	/scoreboard players set @a[m=adventure,score_effectsTimer_min=4] effects 1
+	
+	// Apply 2 if above a vent
+	/execute @e[tag=largeVent] ~ ~ ~ execute @a[dx=3,dy=51,dz=3] ~ ~ ~ scoreboard players set @p effects 2
+	/execute @e[tag=smallVent] ~ ~ ~ execute @a[dx=1,dy=25,dz=1] ~ ~ ~ scoreboard players set @p effects 2
+	/execute @e[tag=miniVent] ~ ~ ~ execute @a[dx=0,dy=10,dz=0] ~ ~ ~ scoreboard players set @p effects 2
+	/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=8,dz=3] ~ ~ ~ scoreboard players set @p effects 2
+
+	// Set to 0 if player has taken damage (and reduce damage score)
+	/scoreboard players set @a[score_damage_min=1] effects 3
+	
+	// Reduce damage score so that falling stops when gone
+	/scoreboard players remove @a[score_damage_min=1] damage 3
+
+	// Set effectsTimer if currently Rising or Free Falling.
+	/scoreboard players set @a[m=adventure,score_effects_min=2,score_effects=3] effectsTimer 0
+
+	// Clear effects when appropriate - Use "protectEffects" to prevent AEC slowing from being removed
 		
-		-- Apply 2 if above a vent
-		/execute @e[tag=largeVent] ~ ~ ~ execute @a[dx=3,dy=51,dz=3] ~ ~ ~ scoreboard players set @p effects 2
-		/execute @e[tag=smallVent] ~ ~ ~ execute @a[dx=1,dy=25,dz=1] ~ ~ ~ scoreboard players set @p effects 2
-		/execute @e[tag=miniVent] ~ ~ ~ execute @a[dx=0,dy=10,dz=0] ~ ~ ~ scoreboard players set @p effects 2
-		/execute @e[name=lobbyvent] ~ ~ ~ execute @a[dx=3,dy=8,dz=3] ~ ~ ~ scoreboard players set @p effects 2
+		// Remove protectEffects tag if no longer applies
+		/scoreboard players tag @a[m=adventure,score_effects_min=0,score_effects=0,tag=protectEffects] remove protectEffects
+		/scoreboard players tag @a[m=adventure,score_effects_min=2,score_effects=2,tag=protectEffects] remove protectEffects
+		/scoreboard players tag @a[m=adventure,score_effects_min=3,score_effects=3,tag=protectEffects] remove protectEffects
 
-		-- Set to 0 if player has taken damage (and reduce damage score)
-		/scoreboard players set @a[score_damage_min=1] effects 3
+		// Clear all effects unless the players is tagged as "protectEffects"
+		/effect @a[m=adventure,tag=!protectEffects] clear
+
+	// Apply effects based on score
 		
-		-- Reduce damage score so that falling stops when gone
-		/scoreboard players remove @a[score_damage_min=1] damage 3
+		// ALL: Jump boost to avoid fall damage
+		/effect @a[m=adventure,score_effects_min=0,score_effects=3] minecraft:jump_boost 1 254 true
 
-		-- Set effectsTimer if currently Rising or Free Falling.
-		/scoreboard players set @a[m=adventure,score_effects_min=2,score_effects=3] effectsTimer 0
-
-		-- Clear effects when appropriate - Use "protectEffects" to prevent AEC slowing from being removed
-			
-			-- Remove protectEffects tag if no longer applies
-			/scoreboard players tag @a[m=adventure,score_effects_min=0,score_effects=0,tag=protectEffects] remove protectEffects
-			/scoreboard players tag @a[m=adventure,score_effects_min=2,score_effects=2,tag=protectEffects] remove protectEffects
-			/scoreboard players tag @a[m=adventure,score_effects_min=3,score_effects=3,tag=protectEffects] remove protectEffects
-
-			-- Clear all effects unless the players is tagged as "protectEffects"
-			/effect @a[m=adventure,tag=!protectEffects] clear
-
-		-- Apply effects based on score
-			
-			--  ALL: Jump boost to avoid fall damage
-			/effect @a[m=adventure,score_effects_min=0,score_effects=3] minecraft:jump_boost 1 254 true
-
-			-- 0: Default: Slow falling effect - buggy, move on to #1 soon
-			/effect @a[m=adventure,score_effects_min=0,score_effects=0] minecraft:levitation 1 1 true
-			--# /execute @a[m=adventure,score_effects_min=0,score_effects=0] ~ ~ ~ say Applying buggy falling effect
-			
-			-- 1: For "slow falling", use a matrix of AECs to apply -11 levitation for 5 minutes (600 ticks).
-			{"executeAs":"@a[m=adventure,score_effects_min=1,score_effects=1,tag=!protectEffects]"}
-				/effect @p clear
-				/summon AreaEffectCloud ~ ~1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~0.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~-0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~-1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~-1.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				/summon AreaEffectCloud ~ ~-2.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-				--# /say Applying AEC falling effect
-				/scoreboard players tag @p add protectEffects
-			{"executeAs":""}
-			
-			-- 2: For Rising apply levitation 8.
-			/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
-			--# /execute @a[m=adventure,score_effects_min=2,score_effects=2] ~ ~ ~ say Applying rise effect
+		// 0: Default: Slow falling effect - buggy, move on to #1 soon
+		/effect @a[m=adventure,score_effects_min=0,score_effects=0] minecraft:levitation 1 1 true
+		//# /execute @a[m=adventure,score_effects_min=0,score_effects=0] ~ ~ ~ say Applying buggy falling effect
+		
+		// 1: For "slow falling", use a matrix of AECs to apply -11 levitation for 5 minutes (600 ticks).
+		>{"executeAs":"@a[m=adventure,score_effects_min=1,score_effects=1,tag=!protectEffects]"}
+			/effect @p clear
+			/summon AreaEffectCloud ~ ~1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~0.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~-0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~-1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~-1.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon AreaEffectCloud ~ ~-2.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			//# /say Applying AEC falling effect
+			/scoreboard players tag @p add protectEffects
+		>{"executeAs":""}
+		
+		// 2: For Rising apply levitation 8.
+		/effect @a[m=adventure,score_effects_min=2,score_effects=2] minecraft:levitation 1 8 true
+		//# /execute @a[m=adventure,score_effects_min=2,score_effects=2] ~ ~ ~ say Applying rise effect

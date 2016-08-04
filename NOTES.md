@@ -117,7 +117,6 @@ Cyan wool - small vent fan
 Music
 -----
 
-
 Clash Defiant Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
@@ -130,6 +129,8 @@ http://creativecommons.org/licenses/by/3.0/
 DEBUGGING
 ---------
 
-turn on: 
-/scoreboard players tag @e[name=SYSTEM] add debugOn
-/scoreboard players tag @e[name=SYSTEM] remove debugOn
+turn on/off: 
+
+    /scoreboard players tag @e[name=SYSTEM] add debugOn
+
+    /scoreboard players tag @e[name=SYSTEM] remove debugOn
