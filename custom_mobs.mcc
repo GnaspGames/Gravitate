@@ -1,0 +1,44 @@
+
+#
+# Summon
+>{"type":"impulse-chain","auto":false}
+	/searge
+>{"auto":true}
+
+	// Create new entity
+	/summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
+
+	// Make invisibile
+	//effect @e[tag=ControlGhast] minecraft:invisibility 240 1 true
+
+#
+# Kill
+>{"type":"impulse-chain","auto":false}
+	/kill @e[tag=CustomPart]
+
+
+/*
+#
+# Loop for effects
+>{"type":"repeating-chain","auto":true}
+
+	// Cloud particle effect
+	/execute @e[tag=ControlGhast] ~ ~ ~ particle fireworksSpark ~ ~1 ~ 2 2 2 0.1 10 force
+
+*/

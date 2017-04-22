@@ -96,9 +96,57 @@
 	// TEST: Create some test mobs
 	!stop_loop MultiplayerFinish
 	//!debugMessage StartSingleplayer event called
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
+	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
 	!start_loop SingleplayerFinish
 
 # SPAWN PLAYERS

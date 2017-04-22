@@ -8,9 +8,57 @@
 !loop MobEvents
 >{"type":"chain"}
 	>{"executeAs":"@e[score_timer=45,score_timer_min=45,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
+		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~10 ~ 
+		{
+			Silent:true,
+			// NoAI:true,
+			Tags:["ControlGhast","CustomPart","Mob"],
+			ActiveEffects:[{Id:14,Amplifier:0,Duration:120000,ShowParticles:0b}],
+			Passengers:[
+				{
+					id:"ArmorStand",
+					Tags:["CustomPart"],
+					NoGravity:1b,
+					Invisible:1,
+					Invulnerable:1,
+					ArmorItems:[{},{},{},{id:dye,Damage:1,Count:1}]
+				}
+			]
+		}
 		/tellraw @a [{"text":"Watch out! Hope you're having a blazing good time.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
