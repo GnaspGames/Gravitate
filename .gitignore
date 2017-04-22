@@ -1,6 +1,11 @@
 *.oc
 gameDir/logs/  
+gameDir/resourcepacks/*.zip
 gameDir/saves/
 gameDir/screenshots/
 gameDir/usercache.json
+gameDir/realms_persistence.json
 music/
+.smelt/cache
+
+

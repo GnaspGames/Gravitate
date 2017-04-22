@@ -28,7 +28,7 @@
 !event StartCountdown
 	>{"type":"chain", "auto":true, "conditional":false}
 	/title @a times 0 40 20
-	/scoreboard players set @e[type=ArmorStand,name=SYSTEM,score_countdown=0] countdown 60
+	/scoreboard players set @e[type=armor_stand,name=SYSTEM,score_countdown=0] countdown 60
 	!start_loop Countdown
 		
 # COUNTDOWN
@@ -50,7 +50,7 @@
 		>{"conditional":true}
 				!start_event StartNewGame
 	>{"executeAs":"", "conditional":false}
-	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] countdown 1
+	/scoreboard players remove @e[type=armor_stand,name=SYSTEM] countdown 1
 	
 # START NEW GAME
 !event StartNewGame
@@ -96,9 +96,9 @@
 	// TEST: Create some test mobs
 	!stop_loop MultiplayerFinish
 	//!debugMessage StartSingleplayer event called
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
-	/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
+	/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~ {Tags:["Mob"]}
 	!start_loop SingleplayerFinish
 
 # SPAWN PLAYERS
@@ -111,7 +111,7 @@
 	/give @p minecraft:arrow 64
 	/give @p minecraft:snowball 16 0 {display:{Name:Fireball}}
 	/give @p tipped_arrow 16 0 {Potion:"minecraft:fire_resistance",display:{Name:Explosive Arrow}}
-	/tp @p @r[type=ArmorStand,name=startingPoint]
+	/tp @p @r[type=armor_stand,name=startingPoint]
 	/scoreboard players set @p ingame 1
 >{"executeAs":""}
 	
@@ -131,7 +131,7 @@
 	>{"executeAs":""}
 	// Announce if the player is out and reset scoreboards
 	>{"executeAs":"@e[tag=MultiplayerMode]"}
-		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ tellraw @a ["",{"selector":"@p"},{"text":" is out!"}]	
+		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ tellraw @a ["",{Count:1,"selector":"@p"},{Count:1,"text":" is out!"}]	
 	>{"executeAs":"@e[tag=SingleplayerMode]"}
 		/execute @a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0] ~ ~ ~ scoreboard players tag @p add GameOver
 	>{"executeAs":"@a[m=adventure,score_ingame_min=3,score_ingame=3,score_lives=0]"}
@@ -148,7 +148,7 @@
 		/gamemode spectator @p
 		/scoreboard players tag @p add spectating
 		>{"type":"chain"}
-		/tp @p @r[type=ArmorStand,name=startingPoint]
+		/tp @p @r[type=armor_stand,name=startingPoint]
 		/scoreboard players set @p trigger_spectate 0
 	>{"executeAs":""}
 	/scoreboard players enable @a trigger_spectate
@@ -162,8 +162,8 @@
 	// Above works assuming testfor block will be 1 in x direction of stats block.
 	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
 		// Announce winner
-		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
-		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ title @a title ["",{"selector":"@p","color":"green","bold":"true"},{"text":" has won! ","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ tellraw @a ["",{Count:1,"selector":"@p","color":"green","bold":"true"},{Count:1,"text":" has won! ","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_lives_min=1,c=1] ~ ~ ~ title @a title ["",{Count:1,"selector":"@p","color":"green","bold":"true"},{Count:1,"text":" has won! ","color":"green","bold":"true"}]
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
 	>{"executeAs":""}
@@ -181,8 +181,8 @@
 	/testfor @e[tag=Mob]
 	// Above works assuming testfor block will be 1 in x direction of stats block.
 	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=0,score_testforOutput_min=0,tag=GameActive]"}
-		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ tellraw @p ["",{"text":"You win!","color":"green","bold":"true"}]
-		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ title @p title ["",{"text":"You win!","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ tellraw @p ["",{Count:1,"text":"You win!","color":"green","bold":"true"}]
+		/execute @a[m=adventure,score_ingame=1,c=1] ~ ~ ~ title @p title ["",{Count:1,"text":"You win!","color":"green","bold":"true"}]
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
 	>{"executeAs":""}
@@ -191,8 +191,8 @@
 	/testfor @a[m=adventure,tag=GameOver]
 	// Above works assuming testfor block will be 1 in x direction of stats block.
 	>{"executeAs":"@e[name=SYSTEM,score_testforOutput=1,score_testforOutput_min=1,tag=GameActive]"}
-		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ tellraw @p ["",{"text":"Game over!","color":"red","bold":"true"}]
-		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ title @p title ["",{"text":"Game over!","color":"red","bold":"true"}]
+		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ tellraw @p ["",{Count:1,"text":"Game over!","color":"red","bold":"true"}]
+		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ title @p title ["",{Count:1,"text":"Game over!","color":"red","bold":"true"}]
 		/execute @a[m=adventure,tag=GameOver] ~ ~ ~ scoreboard players tag @p remove GameOver
 		!start_event EndGame
 		/scoreboard players tag @e[name=SYSTEM] remove GameActive
@@ -224,7 +224,7 @@
 	/stopsound @a[m=adventure]
 	
 	//- Kill any left over Fireballs
-	/kill @e[type=Fireball]
+	/kill @e[type=fireball]
 	// Clone START GAME wall
 	/clone -26 2 -45 -23 3 -44 -26 5 -50
 	// Clone SETTINGS wall

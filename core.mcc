@@ -6,9 +6,9 @@
 
 # MAP RESET
 >{"type":"repeating", "auto": true}
-/kill @e[type=ArmorStand,name=RESET]
+/kill @e[type=armor_stand,name=RESET]
 	>{"conditional":true}
-	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say RESETTING MAP
+	/execute @e[type=armor_stand,name=SYSTEM] ~ ~ ~ say RESETTING MAP
 	>{"type":"chain", "conditional":false}
 		// Use correct game rules
 		/gamerule doDaylightCycle false
@@ -54,8 +54,8 @@
 		/worldborder center 0 0
 		/worldborder set 1000000
 		// Recreate SYSTEM entity
-		/kill @e[type=ArmorStand,name=SYSTEM]
-		/summon ArmorStand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
+		/kill @e[type=armor_stand,name=SYSTEM]
+		/summon armor_stand -75 2 -89 { NoGravity : 1b, Invulnerable : 1b, CustomName : "SYSTEM", CustomNameVisible : 1b }
 		// Clone START GAME wall
 		/clone -26 2 -45 -23 3 -44 -26 5 -50
 		// Prepare settings and clone SETTINGS wall
@@ -65,12 +65,12 @@
 		/blockdata -25 3 -69 {Text2: "{\"text\":\"MOBS: ON\",\"color\":\"dark_green\",\"bold\":true,\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"trigger trigger_settings set 6\"}}"}		
 		/clone -26 2 -70 -23 3 -69 -26 5 -64
 		// Recreate SOUNDPLAYER entity
-		/kill @e[type=AreaEffectCloud,name=SOUNDPLAYER]
-		/summon AreaEffectCloud 56.0 65.0 -56.0 {Duration:2147483647,CustomName:SOUNDPLAYER}
+		/kill @e[type=area_effect_cloud,name=SOUNDPLAYER]
+		/summon area_effect_cloud 56.0 65.0 -56.0 {Duration:2147483647,CustomName:SOUNDPLAYER}
 		// Stop all sounds
 		/stopsound @a
 		// Finish
-		/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
+		/execute @e[type=armor_stand,name=SYSTEM] ~ ~ ~ say THE MAP HAS BEEN RESET
 	
 # NEW PLAYERS
 >{"type":"repeating", "auto": true}
@@ -88,20 +88,20 @@
 		/title @p times 0 40 20
 		/title @p subtitle {"text":"by Gnasp","color":"white"}
 		/title @p title {"text":"GRAVITATE","color":"green","bold":"true"}
-		/tellraw @p [{"text":"Welcome to the Gravitate play test.","color":"green"}]
-		/tellraw @p [{"text":"Download the resource pack from: ","color":"green"},{"text":"gnasp.com/downloads/gravitate-resources.zip","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"http://www.gnasp.com/downloads/gravitate-resources.zip"}}]
-		/tellraw @p [{"text":"This is a multiplayer game, so you'll need others to play.","color":"green"}]
-		/tellraw @p [{"text":"Please feedback your thoughts to Gnasp:","color":"green"}]
-		/tellraw @p [{"text":"Discord Server.","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"https://discord.gg/jeHc4QH"}}]
-		/tellraw @p [{"text":"@GnaspGames on Twitter.","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"https://twitter.com/GnaspGames"}}]
+		/tellraw @p [{Count:1,"text":"Welcome to the Gravitate play test.","color":"green"}]
+		/tellraw @p [{Count:1,"text":"Download the resource pack from: ","color":"green"},{Count:1,"text":"gnasp.com/downloads/gravitate-resources.zip","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"http://www.gnasp.com/downloads/gravitate-resources.zip"}}]
+		/tellraw @p [{Count:1,"text":"This is a multiplayer game, so you'll need others to play.","color":"green"}]
+		/tellraw @p [{Count:1,"text":"Please feedback your thoughts to Gnasp:","color":"green"}]
+		/tellraw @p [{Count:1,"text":"Discord Server.","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"https://discord.gg/jeHc4QH"}}]
+		/tellraw @p [{Count:1,"text":"@GnaspGames on Twitter.","color":"green","underlined":true,"clickEvent":{"action":"open_url","value":"https://twitter.com/GnaspGames"}}]
 		/scoreboard players set @p lobbyStatus 1
 	>{"executeAs":""}
 		
 # CHECK TIMER
 >{"type":"repeating-chain", "auto":true}
 	/worldborder get
-	/stats block ~-1 ~ ~ set QueryResult @e[type=ArmorStand,name=SYSTEM] timer 
-	/scoreboard players remove @e[type=ArmorStand,name=SYSTEM] timer 1000000 
+	/stats block ~-1 ~ ~ set QueryResult @e[type=armor_stand,name=SYSTEM] timer 
+	/scoreboard players remove @e[type=armor_stand,name=SYSTEM] timer 1000000 
 	
 # START TIMER
 !event StartTimer
@@ -118,18 +118,18 @@
 #
 # RUN RESET
 >{"type":"impulse","auto":false}
-/summon ArmorStand ~ ~ ~ {CustomName:RESET}
+/summon armor_stand ~ ~ ~ {CustomName:RESET}
 
 #
 # DEBUG ON
 >{"type":"impulse","auto":false}
 /scoreboard players tag @e[name=SYSTEM] add debugOn
 	>{"type":"chain", "auto":true}
-	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say DEBUG MODE ON
+	/execute @e[type=armor_stand,name=SYSTEM] ~ ~ ~ say DEBUG MODE ON
 
 #
 # DEBUG OFF
 >{"type":"impulse","auto":false}
 /scoreboard players tag @e[name=SYSTEM] remove debugOn
 	>{"type":"chain", "auto":true}
-	/execute @e[type=ArmorStand,name=SYSTEM] ~ ~ ~ say DEBUG MODE OFF
+	/execute @e[type=armor_stand,name=SYSTEM] ~ ~ ~ say DEBUG MODE OFF

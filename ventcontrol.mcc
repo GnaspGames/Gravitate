@@ -68,13 +68,13 @@
 		// 1: For "slow falling", use a matrix of AECs to apply -11 levitation for 5 minutes (600 ticks).
 		>{"executeAs":"@a[m=adventure,score_effects_min=1,score_effects=1,tag=!protectEffects]"}
 			/effect @p clear
-			/summon AreaEffectCloud ~ ~1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~0.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~-0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~-1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~-1.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
-			/summon AreaEffectCloud ~ ~-2.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~0.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~-0.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~-1.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~-1.5 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
+			/summon area_effect_cloud ~ ~-2.0 ~ {Radius:1.5f,Particle:take,Age:0,Duration:20,Effects:[{Id:25,Amplifier:-11,Duration:6000,ShowParticles:0b}]}
 			//# /say Applying AEC falling effect
 			/scoreboard players tag @p add protectEffects
 		>{"executeAs":""}

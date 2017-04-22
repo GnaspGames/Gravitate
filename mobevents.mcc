@@ -8,10 +8,10 @@
 !loop MobEvents
 >{"type":"chain"}
 	>{"executeAs":"@e[score_timer=45,score_timer_min=45,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Hope you're having a blazing good time.","color":"red"}]
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/tellraw @a [{Count:1,"text":"Watch out! Hope you're having a blazing good time.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
@@ -23,7 +23,7 @@
 
 	>{"executeAs":"@e[score_timer=120,score_timer_min=120,tag=!eventActive]"}
 		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Something is shulking about.","color":"red"}]
+		/tellraw @a [{Count:1,"text":"Watch out! Something is shulking about.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
@@ -34,10 +34,10 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	>{"executeAs":"@e[score_timer=240,score_timer_min=240,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Something ghastly just got here.","color":"red"}]
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/tellraw @a [{Count:1,"text":"Watch out! Something ghastly just got here.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
@@ -48,13 +48,13 @@
 		/scoreboard players tag @e[r=0] remove eventActive
 
 	>{"executeAs":"@e[score_timer=360,score_timer_min=360,tag=!eventActive]"}
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/tellraw @a [{"text":"Watch out! It's getting blazing hot in here.","color":"red"}]
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/tellraw @a [{Count:1,"text":"Watch out! It's getting blazing hot in here.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
@@ -67,7 +67,7 @@
 	>{"executeAs":"@e[score_timer=480,score_timer_min=480,tag=!eventActive]"}
 		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
 		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
-		/tellraw @a [{"text":"Watch out! No need to shulk about it.","color":"red"}]
+		/tellraw @a [{Count:1,"text":"Watch out! No need to shulk about it.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
@@ -80,13 +80,13 @@
 	>{"executeAs":"@e[score_timer=600,score_timer_min=600,tag=!eventActive]"}
 		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~ ~
 		/execute @e[tag=shulkerPoint] ~ ~ ~ summon Shulker ~ ~-28 ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/execute @r[type=ArmorStand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
-		/tellraw @a [{"text":"Watch out! Let's mix it up now.","color":"red"}]
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Ghast ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/execute @r[type=armor_stand,name=startingPoint] ~ ~ ~ summon Blaze ~ ~ ~
+		/tellraw @a [{Count:1,"text":"Watch out! Let's mix it up now.","color":"red"}]
 		/title @a title {"text":"!","color":"red","bold":"true"}
 		/stopsound @a
 		/execute @e[name=SOUNDPLAYER] ~ ~ ~ playsound minecraft:entity.shulker.teleport master @a[m=adventure] ~ ~ ~ 100 1 1
